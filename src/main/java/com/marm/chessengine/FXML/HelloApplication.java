@@ -1,4 +1,4 @@
-package com.marm.chessengine;
+package com.marm.chessengine.FXML;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
