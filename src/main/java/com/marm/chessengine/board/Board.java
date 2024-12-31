@@ -15,5 +15,14 @@
  * **************************************** */
 package com.marm.chessengine.board;
 
+import javafx.util.Pair;
+
 public class Board {
+    public Board(){
+
+    }
+
+    public Tile getTile(Pair<Integer,Integer> coordinatePair){
+        return null;
+    }
 }

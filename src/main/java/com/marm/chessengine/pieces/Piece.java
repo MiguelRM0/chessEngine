@@ -23,6 +23,9 @@ public abstract class Piece{
         this.pieceCoordinatePair = new Pair<>(this.pieceXCord, this.pieceYCord);
 
     }
+    public Alliance getPieceAlliance(){
+        return this.pieceAlliance;
+    }
 
     public abstract List<Move> calculateLegalMoves(final Board board);
 
