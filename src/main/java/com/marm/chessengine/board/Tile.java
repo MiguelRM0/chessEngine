@@ -13,15 +13,15 @@ public abstract class Tile {
     protected final int xCord;
     protected final int yCord;
 
-    protected final Pair<Integer,Integer> tileCoordinatePair;
+    protected final MutableCoordinate tileCoordinatePair;
 
-    private static final Map<Pair<Integer, Integer>, EmptyTile> EMPTY_TILE_CACHE = createAllPossibleEmptyTiles();
+    private static final Map<MutableCoordinate, EmptyTile> EMPTY_TILE_CACHE = createAllPossibleEmptyTiles();
 
-    private static Map<Pair<Integer,Integer>, EmptyTile> createAllPossibleEmptyTiles() {
-        final Map<Pair<Integer,Integer>, EmptyTile> emptyTileMap = new HashMap<>();
-        for ( int i = 0; i < 8; i++){
-            for (int j = 0; j < 8; j++){
-                Pair<Integer,Integer> coordinate = new Pair<>(i, j);
+    private static Map<MutableCoordinate, EmptyTile> createAllPossibleEmptyTiles() {
+        final Map<MutableCoordinate, EmptyTile> emptyTileMap = new HashMap<>();
+        for ( int i = 0; i < BoardUtils.NUM_TILES_PER_ROW; i++){
+            for (int j = 0; j < BoardUtils.NUM_TILES_PER_ROW; j++){
+                MutableCoordinate coordinate = new MutableCoordinate(i, j);
                 EmptyTile emptyTile = new EmptyTile(i,j);
                 emptyTileMap.put(coordinate, emptyTile);
             }
@@ -34,7 +34,7 @@ public abstract class Tile {
         return piece != null ? new OccupiedTile(xCoord, yCoord, piece) : EMPTY_TILE_CACHE.get(new Pair<>(xCoord, yCoord));
     }
 
-    public Map<Pair<Integer,Integer>,EmptyTile> getEmptyTileMap(){
+    public Map<MutableCoordinate,EmptyTile> getEmptyTileMap(){
         return EMPTY_TILE_CACHE;
     }
 
@@ -43,7 +43,7 @@ public abstract class Tile {
         this.yCord = yCoord;
 
 
-        this.tileCoordinatePair = new Pair<>(this.xCord, this.yCord);
+        this.tileCoordinatePair = new MutableCoordinate(this.xCord, this.yCord);
     }
 
     public abstract boolean isTileOccupied();
@@ -69,7 +69,7 @@ public abstract class Tile {
 
     public static final class OccupiedTile extends Tile{
 
-        private  final Piece pieceOnTile;
+        private final Piece pieceOnTile;
 
         private OccupiedTile(final int xCoord, final int yCoord, Piece pieceOnTile) {
             super(xCoord, yCoord);
@@ -86,5 +86,6 @@ public abstract class Tile {
 public static void main(String[] args) {
     Tile tile = new EmptyTile(1, 1);
     System.out.println(tile.getEmptyTileMap().values().size());
+
     }
 }

@@ -22,7 +22,7 @@ public class Board {
 
     }
 
-    public Tile getTile(Pair<Integer,Integer> coordinatePair){
+    public Tile getTile(MutableCoordinate coordinatePair){
         return null;
     }
 }

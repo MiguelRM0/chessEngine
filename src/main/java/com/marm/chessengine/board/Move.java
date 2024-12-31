@@ -15,5 +15,37 @@
  * **************************************** */
 package com.marm.chessengine.board;
 
-public class Move {
+import com.marm.chessengine.pieces.Piece;
+import javafx.util.Pair;
+
+public abstract class  Move {
+    final Board board;
+    final Piece movedPiece;
+    final MutableCoordinate destinationCoordinate;
+
+    private Move(final Board board , final Piece movedPiece, final MutableCoordinate destinationCoordinate){
+        this.board = board;
+        this.movedPiece = movedPiece;
+        this.destinationCoordinate = destinationCoordinate;
+    }
+
+    public static final class  MajorMove extends Move{
+
+        public MajorMove(final Board board, final Piece movedPiece, final MutableCoordinate destinationCoordinate) {
+            super(board, movedPiece, destinationCoordinate);
+        }
+    }
+
+    public static final class AttackMove extends Move{
+        final Piece attackedPiece;
+
+        public AttackMove(final Board board, final Piece movedPiece,final  MutableCoordinate destinationCoordinate, final Piece attackedPiece ) {
+            super(board, movedPiece, destinationCoordinate);
+            this.attackedPiece = attackedPiece;
+
+        }
+    }
+
+
+
 }
