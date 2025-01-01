@@ -29,7 +29,7 @@ public class Knight extends Piece{
 
     private final static int[][] CANDIDATE_MOVE_COORDINATES = {{2, 1}, {2, -1}, {-2, 1}, {-2, -1}, {1, 2}, {1, -2}, {-1, 2}, {-1, -2}};
 
-    Knight(final int pieceXCord, final int pieceYCord, final Alliance alliance) {
+    public Knight(final int pieceXCord, final int pieceYCord, final Alliance alliance) {
         super(pieceXCord, pieceYCord, alliance);
     }
 

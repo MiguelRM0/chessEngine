@@ -3,10 +3,10 @@ package com.marm.chessengine.board;
 
 
 import com.marm.chessengine.pieces.Piece;
-import javafx.util.Pair;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public abstract class Tile {
@@ -31,7 +31,7 @@ public abstract class Tile {
     }
 
     public static Tile createTile(final int xCoord, final int yCoord, final Piece piece){
-        return piece != null ? new OccupiedTile(xCoord, yCoord, piece) : EMPTY_TILE_CACHE.get(new Pair<>(xCoord, yCoord));
+        return piece != null ? new OccupiedTile(xCoord, yCoord, piece) : EMPTY_TILE_CACHE.get(new MutableCoordinate(xCoord, yCoord));
     }
 
     public Map<MutableCoordinate,EmptyTile> getEmptyTileMap(){

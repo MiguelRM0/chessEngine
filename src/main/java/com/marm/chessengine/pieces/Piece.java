@@ -10,21 +10,25 @@ import java.util.List;
 
 public abstract class Piece{
 
-    private static final int[][] CANDIDATE_MOVE_VECTOR_COORDINATES = null ;
     protected final int pieceXCord;
     protected final int pieceYCord;
 
-    protected final Pair<Integer, Integer> pieceCoordinatePair;
+    protected final MutableCoordinate pieceCoordinatePair;
 
     protected final Alliance pieceAlliance;
 
+    protected final boolean isFirstMove;
 
     Piece(final int pieceXCord, final int pieceYCord, final Alliance alliance){
         this.pieceXCord = pieceXCord;
         this.pieceYCord = pieceYCord;
         this.pieceAlliance = alliance;
-        this.pieceCoordinatePair = new Pair<>(this.pieceXCord, this.pieceYCord);
+        this.pieceCoordinatePair = new MutableCoordinate(this.pieceXCord, this.pieceYCord);
+        this.isFirstMove = false;
+    }
 
+    public MutableCoordinate getPieceCoordinatePair(){
+        return this.pieceCoordinatePair;
     }
     public Alliance getPieceAlliance(){
         return this.pieceAlliance;
@@ -68,5 +72,7 @@ public abstract class Piece{
     }
 
 
-
+    public boolean isFirstMove() {
+        return this.isFirstMove;
+    }
 }

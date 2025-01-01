@@ -25,11 +25,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import static com.marm.chessengine.board.Move.*;
-
 public class Bishop extends Piece {
     private final static int[][] CANDIDATE_MOVE_VECTOR_COORDINATES = {{1,1}, {1,-1}, {-1,1}, {-1,-1}};
-    Bishop(int pieceXCord, int pieceYCord, Alliance alliance) {
+    public Bishop(int pieceXCord, int pieceYCord, Alliance alliance) {
         super(pieceXCord, pieceYCord, alliance);
     }
 
