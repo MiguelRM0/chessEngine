@@ -15,6 +15,8 @@
  * **************************************** */
 package com.marm.chessengine.board;
 
+import java.util.Objects;
+
 public class MutableCoordinate {
     private int x;
     private int y;
@@ -39,5 +41,25 @@ public class MutableCoordinate {
    public void setY(int  newY){
        this.y = newY;
    }
+   @Override
+   public boolean equals(Object o){
+       if (this == o) return true;
+       if (o == null || getClass() != o.getClass()) return false;
+       MutableCoordinate that = (MutableCoordinate) o;
+       return this.x == that.x && this.y == that.y;
+   }
 
+   @Override
+   public int hashCode(){
+       return Objects.hash(x,y);
+   }
+
+
+    public static void main(String[] args) {
+        MutableCoordinate p1 = new MutableCoordinate(5,3);
+        MutableCoordinate p2 = new MutableCoordinate(5,3);
+        System.out.println(p1.equals(p2));
+
+
+    }
 }

@@ -18,17 +18,20 @@ package com.marm.chessengine;
 import com.marm.chessengine.board.MutableCoordinate;
 
 import java.util.AbstractMap;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
 public class testing {
     public static void main(String[] args) {
-        Map<AbstractMap.SimpleEntry<Integer,Integer>, Integer> testing = new HashMap<>();
-//        testing.put(firstEntry, 5);
-
-        AbstractMap.SimpleEntry<Integer,Integer> secondEntry = new AbstractMap.SimpleEntry<>(5,4);
-        testing.put(secondEntry, 5);
-        System.out.println(testing.get(new AbstractMap.SimpleEntry<>(5,4)));
+//        Map<MutableCoordinate, Integer> testing = new HashMap<>();
+//        MutableCoordinate entry = new MutableCoordinate(4,3);
+//        testing.put(entry , 5);
+//        System.out.println(testing.get(new MutableCoordinate(4,3)));
+        int[] test = new int[2];
+        test[0] = 1;
+        test[1] = 1;
+        System.out.println(Arrays.equals(test, new int[]{1,1}));
 
     }
 }

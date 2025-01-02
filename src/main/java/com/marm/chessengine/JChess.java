@@ -16,11 +16,13 @@
 package com.marm.chessengine;
 
 import com.marm.chessengine.board.Board;
+import com.marm.chessengine.board.MutableCoordinate;
 
 public class JChess {
 
     public static void main(String[] args) {
-//        Board board = Board.createStandardBoard();
-//        System.out.println(board);
+        Board board = Board.createStandardBoard();
+        System.out.println(board);
+        System.out.println(board.getTile(new MutableCoordinate(5,4)));
     }
 }

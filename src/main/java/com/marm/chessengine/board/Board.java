@@ -30,8 +30,8 @@ public class Board {
         this.gameBoard = createGameBoard(builder);
         this.whitePieces = calculateActivePieces(this.gameBoard, Alliance.WHITE);
         this.blackPieces = calculateActivePieces(this.gameBoard, Alliance.BLACK);
-        final Collection<Move> whiteStandardLegalMoves = calculateLegalMoves(this.whitePieces);
-        final Collection<Move> blackStandardLegalMoves = calculateLegalMoves(this.blackPieces);
+//        final Collection<Move> whiteStandardLegalMoves = calculateLegalMoves(this.whitePieces);
+//        final Collection<Move> blackStandardLegalMoves = calculateLegalMoves(this.blackPieces);
 
     }
 
@@ -66,7 +66,7 @@ public class Board {
         final StringBuilder builder = new StringBuilder();
         for (int i = 0; i< BoardUtils.NUM_TILES_PER_ROW; i++){
             for (int j = 0; j < BoardUtils.NUM_TILES_PER_ROW; j++){
-                final String tileText = prettyPrint(this.gameBoard.get(null));
+                final String tileText = prettyPrint(this.gameBoard.get(new MutableCoordinate(i,j)));
                 builder.append(String.format("%3s", tileText));
 
             }

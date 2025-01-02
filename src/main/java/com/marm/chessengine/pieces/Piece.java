@@ -24,7 +24,7 @@ public abstract class Piece{
         this.pieceYCord = pieceYCord;
         this.pieceAlliance = alliance;
         this.pieceCoordinatePair = new MutableCoordinate(this.pieceXCord, this.pieceYCord);
-        this.isFirstMove = false;
+        this.isFirstMove = true;
     }
 
     public MutableCoordinate getPieceCoordinatePair(){
