@@ -19,12 +19,19 @@ public abstract class Piece{
 
     protected final boolean isFirstMove;
 
-    Piece(final int pieceXCord, final int pieceYCord, final Alliance alliance){
+    protected final PieceType pieceType;
+
+    Piece(final int pieceXCord, final int pieceYCord, final Alliance alliance, final PieceType pieceType){
         this.pieceXCord = pieceXCord;
         this.pieceYCord = pieceYCord;
         this.pieceAlliance = alliance;
+        this.pieceType = pieceType;
         this.pieceCoordinatePair = new MutableCoordinate(this.pieceXCord, this.pieceYCord);
         this.isFirstMove = true;
+    }
+
+    public PieceType getPieceType(){
+        return this.pieceType;
     }
 
     public MutableCoordinate getPieceCoordinatePair(){
@@ -77,12 +84,42 @@ public abstract class Piece{
     }
 
     public enum PieceType{
-        PAWN("P"),
-        KNIGHT("N"),
-        BISHOP("B"),
-        ROOK("R"),
-        QUEEN("Q"),
-        KING("K");
+        PAWN("P") {
+            @Override
+            public boolean isKing() {
+                return false;
+            }
+        },
+        KNIGHT("N") {
+            @Override
+            public boolean isKing() {
+                return false;
+            }
+        },
+        BISHOP("B") {
+            @Override
+            public boolean isKing() {
+                return false;
+            }
+        },
+        ROOK("R") {
+            @Override
+            public boolean isKing() {
+                return false;
+            }
+        },
+        QUEEN("Q") {
+            @Override
+            public boolean isKing() {
+                return false;
+            }
+        },
+        KING("K") {
+            @Override
+            public boolean isKing() {
+                return true;
+            }
+        };
 
         private String pieceName;
          PieceType(final String pieceName){
@@ -93,5 +130,7 @@ public abstract class Piece{
         public String toString(){
              return this.pieceName;
         }
+
+        public abstract boolean isKing();
     }
 }

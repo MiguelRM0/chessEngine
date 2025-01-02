@@ -28,7 +28,7 @@ import java.util.Map;
 public class Bishop extends Piece {
     private final static int[][] CANDIDATE_MOVE_VECTOR_COORDINATES = {{1,1}, {1,-1}, {-1,1}, {-1,-1}};
     public Bishop(int pieceXCord, int pieceYCord, Alliance alliance) {
-        super(pieceXCord, pieceYCord, alliance);
+        super(pieceXCord, pieceYCord, alliance, PieceType.BISHOP);
     }
 
     @Override

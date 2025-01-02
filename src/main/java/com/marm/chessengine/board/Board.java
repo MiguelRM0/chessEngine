@@ -17,6 +17,9 @@ package com.marm.chessengine.board;
 
 import com.marm.chessengine.Alliance;
 import com.marm.chessengine.pieces.*;
+import com.marm.chessengine.player.BlackPlayer;
+import com.marm.chessengine.player.Player;
+import com.marm.chessengine.player.WhitePlayer;
 
 import java.util.*;
 
@@ -25,13 +28,18 @@ public class Board {
     private final Collection<Piece> whitePieces;
     private final Collection<Piece> blackPieces;
 
+    private final WhitePlayer whitePlayer;
+    private final BlackPlayer blackPlayer;
+
 
     public Board(Builder builder){
         this.gameBoard = createGameBoard(builder);
         this.whitePieces = calculateActivePieces(this.gameBoard, Alliance.WHITE);
         this.blackPieces = calculateActivePieces(this.gameBoard, Alliance.BLACK);
-//        final Collection<Move> whiteStandardLegalMoves = calculateLegalMoves(this.whitePieces);
-//        final Collection<Move> blackStandardLegalMoves = calculateLegalMoves(this.blackPieces);
+        final Collection<Move> whiteStandardLegalMoves = calculateLegalMoves(this.whitePieces);
+        final Collection<Move> blackStandardLegalMoves = calculateLegalMoves(this.blackPieces);
+        this.whitePlayer = new WhitePlayer(this, whiteStandardLegalMoves, blackStandardLegalMoves);
+        this.blackPlayer = new BlackPlayer(this, whiteStandardLegalMoves, blackStandardLegalMoves);
 
     }
 
@@ -61,9 +69,26 @@ public class Board {
         return Collections.unmodifiableList(activePieces);
     }
 
+    public Collection<Piece> getWhitePieces(){
+        return this.whitePieces;
+    }
+
+    public Collection<Piece> getBlackPieces(){
+        return this.blackPieces;
+    }
+
+    public Player whitePlayer(){
+        return this.whitePlayer;
+    }
+
+    public Player blackPlayer(){
+        return this.blackPlayer;
+    }
+
     @Override
     public String toString(){
         final StringBuilder builder = new StringBuilder();
+        builder.append("\n");
         for (int i = 0; i< BoardUtils.NUM_TILES_PER_ROW; i++){
             for (int j = 0; j < BoardUtils.NUM_TILES_PER_ROW; j++){
                 final String tileText = prettyPrint(this.gameBoard.get(new MutableCoordinate(i,j)));

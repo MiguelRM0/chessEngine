@@ -23,6 +23,5 @@ public class JChess {
     public static void main(String[] args) {
         Board board = Board.createStandardBoard();
         System.out.println(board);
-        System.out.println(board.getTile(new MutableCoordinate(5,4)));
     }
 }

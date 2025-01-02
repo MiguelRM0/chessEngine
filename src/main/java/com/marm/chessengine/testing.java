@@ -28,10 +28,6 @@ public class testing {
 //        MutableCoordinate entry = new MutableCoordinate(4,3);
 //        testing.put(entry , 5);
 //        System.out.println(testing.get(new MutableCoordinate(4,3)));
-        int[] test = new int[2];
-        test[0] = 1;
-        test[1] = 1;
-        System.out.println(Arrays.equals(test, new int[]{1,1}));
 
     }
 }

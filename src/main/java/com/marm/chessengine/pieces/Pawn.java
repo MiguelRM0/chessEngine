@@ -29,9 +29,9 @@ import java.util.List;
 import static com.marm.chessengine.board.Move.*;
 
 public class Pawn extends Piece{
-    private final static int[][] CANDIDATE_MOVE_COORDINATES = {{0,1} ,{0,2}, {1,1}, {1,-1}};
+    private final static int[][] CANDIDATE_MOVE_COORDINATES = {{1,0} ,{2,0}, {1,1}, {1,-1}};
     public Pawn( final int pieceXCord, final int pieceYCord, final Alliance alliance) {
-        super(pieceXCord, pieceYCord, alliance);
+        super(pieceXCord, pieceYCord, alliance, PieceType.PAWN);
     }
 
 
@@ -46,34 +46,36 @@ public class Pawn extends Piece{
                 continue;
             }
             /* Not occupied able to add to moves*/
-            if (Arrays.equals(currentCandidateVector, new int[]{0, 1}) && !board.getTile(candidateDestinationCoordinate).isTileOccupied()) {
+            System.out.print(board.getTile(candidateDestinationCoordinate));
+            if (Arrays.equals(currentCandidateVector, new int[]{1,0}) && !board.getTile(candidateDestinationCoordinate).isTileOccupied()) {
                 legalMoves.add(new MajorMove(board,this, candidateDestinationCoordinate));
                 /* Logic for pawn jump move, has to be first move and either on second row or seventh row depends on if black or white */
-            }else if (Arrays.equals(currentCandidateVector, new int[]{0,2} )  && (this.isFirstMove()) &&
-                    (BoardUtils.SECOND_ROW[this.pieceXCord][this.pieceYCord] && this.pieceAlliance.isBlack()) ||
-                    (BoardUtils.SEVENTH_ROW[this.pieceXCord][this.pieceYCord] && this.pieceAlliance.isWhite()) ){
-                final MutableCoordinate behindCandidateDestinationCoordinate = new MutableCoordinate(this.pieceXCord + (this.getPieceAlliance().getDirection()), this.pieceYCord + (this.getPieceAlliance().getDirection()));
+
+            }else if ((Arrays.equals(currentCandidateVector, new int[]{2,0} )  && (this.isFirstMove())) &&
+                    ((BoardUtils.SECOND_ROW[this.pieceXCord][this.pieceYCord] && this.pieceAlliance.isBlack()) ||
+                    (BoardUtils.SEVENTH_ROW[this.pieceXCord][this.pieceYCord] && this.pieceAlliance.isWhite())) ){
+                final MutableCoordinate behindCandidateDestinationCoordinate = new MutableCoordinate(this.pieceXCord + (this.getPieceAlliance().getDirection()), this.pieceYCord );
                 if(!board.getTile(behindCandidateDestinationCoordinate).isTileOccupied()  && !board.getTile(candidateDestinationCoordinate).isTileOccupied()){
                     legalMoves.add(new MajorMove(board,this, candidateDestinationCoordinate));
                 }
-            } else if (Arrays.equals(currentCandidateVector, new int[] {1,1})){
-                if(board.getTile(candidateDestinationCoordinate).isTileOccupied()){
+            } else if (Arrays.equals(currentCandidateVector, new int[] {1,1})   ||  Arrays.equals(currentCandidateVector,new int[]{1,-1})) {
+                if (board.getTile(candidateDestinationCoordinate).isTileOccupied()) {
                     final Piece pieceOnCandidate = board.getTile(candidateDestinationCoordinate).getPiece();
-                    if(this.pieceAlliance != pieceOnCandidate.getPieceAlliance()){
-                        legalMoves.add(new MajorMove(board,this, candidateDestinationCoordinate));
+                    if (this.pieceAlliance != pieceOnCandidate.getPieceAlliance()) {
+                        legalMoves.add(new MajorMove(board, this, candidateDestinationCoordinate));
                     }
                 }
-
-
-            }else if (Arrays.equals(currentCandidateVector, new int[] {1,-1})) {
-                if(board.getTile(candidateDestinationCoordinate).isTileOccupied()){
-                    final Piece pieceOnCandidate = board.getTile(candidateDestinationCoordinate).getPiece();
-                    if(this.pieceAlliance != pieceOnCandidate.getPieceAlliance()){
-                        legalMoves.add(new MajorMove(board,this, candidateDestinationCoordinate));
-                    }
-                }
-
             }
+
+//            }else if (Arrays.equals(currentCandidateVector, new int[] {-1,1})) {
+//                if(board.getTile(candidateDestinationCoordinate).isTileOccupied()){
+//                    final Piece pieceOnCandidate = board.getTile(candidateDestinationCoordinate).getPiece();
+//                    if(this.pieceAlliance != pieceOnCandidate.getPieceAlliance()){
+//                        legalMoves.add(new MajorMove(board,this, candidateDestinationCoordinate));
+//                    }
+//                }
+//
+//            }
 
         }
         return Collections.unmodifiableList(legalMoves);
