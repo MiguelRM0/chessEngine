@@ -63,6 +63,11 @@ public class Knight extends Piece{
         return Collections.unmodifiableList(legalMoves);
     }
 
+    @Override
+    public String toString(){
+        return PieceType.KNIGHT.toString();
+    }
+
     public static void main(String[] args) {
         Piece knight = new Knight(5,3, Alliance.WHITE);
 

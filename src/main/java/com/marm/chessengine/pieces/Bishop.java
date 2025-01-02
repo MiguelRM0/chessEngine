@@ -35,4 +35,9 @@ public class Bishop extends Piece {
     public List<Move> calculateLegalMoves(final Board board) {
         return this.legalMovesQRB(board, CANDIDATE_MOVE_VECTOR_COORDINATES);
     }
+
+    @Override
+    public String toString(){
+        return PieceType.BISHOP.toString();
+    }
 }

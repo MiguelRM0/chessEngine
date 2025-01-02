@@ -4,10 +4,7 @@ package com.marm.chessengine.board;
 
 import com.marm.chessengine.pieces.Piece;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public abstract class Tile {
     protected final int xCord;
@@ -31,7 +28,7 @@ public abstract class Tile {
     }
 
     public static Tile createTile(final int xCoord, final int yCoord, final Piece piece){
-        return piece != null ? new OccupiedTile(xCoord, yCoord, piece) : EMPTY_TILE_CACHE.get(new MutableCoordinate(xCoord, yCoord));
+        return piece != null ? new OccupiedTile(xCoord, yCoord, piece) : new EmptyTile(xCoord,yCoord);
     }
 
     public Map<MutableCoordinate,EmptyTile> getEmptyTileMap(){
@@ -64,6 +61,10 @@ public abstract class Tile {
         public Piece getPiece(){
             return null;
         }
+        @Override
+        public String toString(){
+            return "-";
+        }
     }
 
 
@@ -81,6 +82,10 @@ public abstract class Tile {
 
         @Override
         public Piece getPiece() {return this.pieceOnTile;}
+
+        public String toString(){
+            return this.pieceOnTile.toString();
+        }
     }
 
 public static void main(String[] args) {

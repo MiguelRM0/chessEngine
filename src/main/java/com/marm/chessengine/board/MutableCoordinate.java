@@ -39,4 +39,5 @@ public class MutableCoordinate {
    public void setY(int  newY){
        this.y = newY;
    }
+
 }

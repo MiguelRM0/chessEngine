@@ -79,6 +79,11 @@ public class Pawn extends Piece{
         return Collections.unmodifiableList(legalMoves);
     }
 
+    @Override
+    public String toString(){
+        return PieceType.PAWN.toString();
+    }
+
 
     public static void main(String[] args) {
         Piece test = new Pawn(3,4, Alliance.WHITE);
