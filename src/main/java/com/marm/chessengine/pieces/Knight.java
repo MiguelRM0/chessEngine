@@ -62,6 +62,12 @@ public class Knight extends Piece{
         }
         return Collections.unmodifiableList(legalMoves);
     }
+    @Override
+    public Knight movePiece(final Move move) {
+        return new Knight(move.getDestinationCoordinate().getX(),move.getDestinationCoordinate().getY(),move.getMovedPiece().getPieceAlliance());
+    }
+
+
 
     @Override
     public String toString(){

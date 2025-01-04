@@ -18,6 +18,8 @@ package com.marm.chessengine.player;
 import com.marm.chessengine.board.Board;
 import com.marm.chessengine.board.Move;
 
+import java.util.concurrent.Future;
+
 public class MoveTransition {
     private final Board transitionBoard;
     private final Move move;
@@ -30,4 +32,8 @@ public class MoveTransition {
     }
 
 
+    public MoveStatus getMoveStatus() {
+        return this.moveStatus;
+
+    }
 }

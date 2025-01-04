@@ -24,7 +24,7 @@ import java.util.List;
 
 public class King extends Piece{
     private final static int[][] CANDIDATE_MOVE_COORDINATES = {{1,1}, {1,-1}, {-1,1}, {-1,-1}, {1,0}, {-1,0}, {0,1}, {0,-1}};
-    public King(int pieceXCord, int pieceYCord, Alliance alliance) {
+    public King(final int pieceXCord, final int pieceYCord, final Alliance alliance) {
         super(pieceXCord, pieceYCord, alliance, PieceType.KING);
     }
 
@@ -54,6 +54,10 @@ public class King extends Piece{
 
         }
         return Collections.unmodifiableList(legalMoves);
+    }
+
+    public King movePiece(final Move move) {
+        return new King(move.getDestinationCoordinate().getX(),move.getDestinationCoordinate().getY(),move.getMovedPiece().getPieceAlliance());
     }
 
     @Override

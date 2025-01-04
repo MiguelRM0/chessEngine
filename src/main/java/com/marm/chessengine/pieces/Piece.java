@@ -21,6 +21,8 @@ public abstract class Piece{
 
     protected final PieceType pieceType;
 
+    private final int cacheHashCode;
+
     Piece(final int pieceXCord, final int pieceYCord, final Alliance alliance, final PieceType pieceType){
         this.pieceXCord = pieceXCord;
         this.pieceYCord = pieceYCord;
@@ -28,6 +30,16 @@ public abstract class Piece{
         this.pieceType = pieceType;
         this.pieceCoordinatePair = new MutableCoordinate(this.pieceXCord, this.pieceYCord);
         this.isFirstMove = true;
+        this.cacheHashCode = computeHashCode();
+    }
+
+    private int computeHashCode() {
+        int result = pieceType.hashCode();
+        result = 31 * result + pieceAlliance.hashCode();
+        result = 31 * result + pieceCoordinatePair.hashCode();
+        result = 31 * result + (isFirstMove ? 1 : 0);
+        return result;
+
     }
 
     public PieceType getPieceType(){
@@ -42,6 +54,8 @@ public abstract class Piece{
     }
 
     public abstract List<Move> calculateLegalMoves(final Board board);
+
+    public abstract Piece movePiece(Move move);
 
 
     protected List<Move> legalMovesQRB(final Board board, int[][] CANDIDATE_MOVE_VECTOR_COORDINATES){
@@ -78,11 +92,33 @@ public abstract class Piece{
         return Collections.unmodifiableList(legalMoves);
     }
 
+    @Override
+    public boolean equals(final Object other){
+        if(this == other){
+            return true;
+        }
+        if(!(other instanceof  Piece)){
+            return false;
+        }
+        final Piece otherPiece = (Piece) other;
+        return pieceCoordinatePair.equals(otherPiece.getPiecePosition()) && pieceType == otherPiece.getPieceType() &&
+                pieceAlliance == otherPiece.getPieceAlliance() && isFirstMove == otherPiece.isFirstMove();
+    }
+
+    @Override
+    public int hashCode(){
+        return this.cacheHashCode;
+
+    }
+
 
     public boolean isFirstMove() {
         return this.isFirstMove;
     }
 
+    public  MutableCoordinate getPiecePosition(){
+        return this.pieceCoordinatePair;
+    }
     public enum PieceType{
         PAWN("P") {
             @Override

@@ -67,23 +67,20 @@ public class Pawn extends Piece{
                 }
             }
 
-//            }else if (Arrays.equals(currentCandidateVector, new int[] {-1,1})) {
-//                if(board.getTile(candidateDestinationCoordinate).isTileOccupied()){
-//                    final Piece pieceOnCandidate = board.getTile(candidateDestinationCoordinate).getPiece();
-//                    if(this.pieceAlliance != pieceOnCandidate.getPieceAlliance()){
-//                        legalMoves.add(new MajorMove(board,this, candidateDestinationCoordinate));
-//                    }
-//                }
-//
-//            }
-
         }
         return Collections.unmodifiableList(legalMoves);
     }
 
+
+
     @Override
     public String toString(){
         return PieceType.PAWN.toString();
+    }
+
+    @Override
+    public Pawn movePiece(final Move move) {
+        return new Pawn(move.getDestinationCoordinate().getX(),move.getDestinationCoordinate().getY(),move.getMovedPiece().getPieceAlliance());
     }
 
 

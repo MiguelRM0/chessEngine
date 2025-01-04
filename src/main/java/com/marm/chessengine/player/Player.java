@@ -18,12 +18,14 @@ package com.marm.chessengine.player;
 import com.marm.chessengine.Alliance;
 import com.marm.chessengine.board.Board;
 import com.marm.chessengine.board.Move;
+import com.marm.chessengine.board.MutableCoordinate;
 import com.marm.chessengine.pieces.King;
 import com.marm.chessengine.pieces.Piece;
 
-import java.security.PublicKey;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 public abstract class Player {
 
@@ -32,12 +34,33 @@ public abstract class Player {
     
     protected final Collection<Move> legalMoves;
 
+    private final boolean isInCheck;
+
 
     public Player(Board board, Collection<Move> legalMoves, Collection<Move> opponentMoves){
         this.board= board;
         this.playerKing = establishKing();
         this.legalMoves = legalMoves;
+        this.isInCheck = !Player.calculateAttacksOnTile(this.playerKing.getPiecePosition(), opponentMoves).isEmpty();
 
+    }
+
+    private static Collection<Move> calculateAttacksOnTile(MutableCoordinate piecePosition, Collection<Move> moves){
+        final List<Move> attackMoves = new ArrayList<>();
+        /* Go through opponent moves*/
+        for (final Move move: moves){
+            /*If king is part of candidate destination coordinates */
+            if(piecePosition.equals(move.getDestinationCoordinate())){
+                /*Add as a move*/
+                attackMoves.add(move);
+            }
+        }
+        return Collections.unmodifiableList(attackMoves);
+
+    }
+
+    public Collection<Move> getLegalMoves(){
+        return this.legalMoves;
     }
 
     public abstract Collection<Piece> getActivePieces();
@@ -60,14 +83,24 @@ public abstract class Player {
     }
     // TODO Implement these methods below !!!
     public boolean isInCheck(){
-        return false;
+        return this.isInCheck;
     }
 
     public boolean isInCheckMate(){
-        return false;
+        return this.isInCheck && !hasEscapeMoves();
     }
 
     public boolean isInStaleMate(){
+        return !this.isInCheck && !hasEscapeMoves();
+    }
+
+    protected boolean hasEscapeMoves() {
+        for (final Move move: this.legalMoves){
+            final MoveTransition transition = makeMove(move);
+            if(transition.getMoveStatus().isDone()){
+                return true;
+            }
+        }
         return false;
     }
 
@@ -76,10 +109,24 @@ public abstract class Player {
     }
 
     public MoveTransition makeMove(final Move move){
-        return null;
+        if(!isMoveLegal(move)){
+            return new MoveTransition(this.board,move,MoveStatus.ILLEGAL_MOVE);
+        }
+        final Board transitionBoard = move.execute();
+        final Collection<Move> kingAttacks = Player.calculateAttacksOnTile(transitionBoard.currentPlayer().getOpponent().getPlayerKing().getPiecePosition(),
+                transitionBoard.currentPlayer().getLegalMoves());
+
+        if(!kingAttacks.isEmpty()){
+            return new MoveTransition(this.board,move,MoveStatus.LEAVES_PLAYER_IN_CHECK);
+        }
+        return new MoveTransition(transitionBoard, move, MoveStatus.DONE) ;
+
     }
 
+    public Piece getPlayerKing() {
+        return this.playerKing;
 
+    }
 
 
 }

@@ -22,6 +22,8 @@ import com.marm.chessengine.player.Player;
 import com.marm.chessengine.player.WhitePlayer;
 
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Board {
     private final Map<MutableCoordinate, Tile> gameBoard;
@@ -30,9 +32,10 @@ public class Board {
 
     private final WhitePlayer whitePlayer;
     private final BlackPlayer blackPlayer;
+    private final Player currentPlayer;
 
 
-    public Board(Builder builder){
+    public Board(final Builder builder){
         this.gameBoard = createGameBoard(builder);
         this.whitePieces = calculateActivePieces(this.gameBoard, Alliance.WHITE);
         this.blackPieces = calculateActivePieces(this.gameBoard, Alliance.BLACK);
@@ -40,6 +43,7 @@ public class Board {
         final Collection<Move> blackStandardLegalMoves = calculateLegalMoves(this.blackPieces);
         this.whitePlayer = new WhitePlayer(this, whiteStandardLegalMoves, blackStandardLegalMoves);
         this.blackPlayer = new BlackPlayer(this, whiteStandardLegalMoves, blackStandardLegalMoves);
+        this.currentPlayer  = builder.nextMoveMaker.choosePlayer(this.whitePlayer,this.blackPlayer);
 
     }
 
@@ -117,7 +121,6 @@ public class Board {
                 MutableCoordinate coordinate = new MutableCoordinate(i,j);
                 tiles.put(coordinate, Tile.createTile(i,j,builder.boardConfig.get(coordinate)));
 
-
             }
 
         }
@@ -157,6 +160,16 @@ public class Board {
 
     public Tile getTile(MutableCoordinate coordinatePair){
         return gameBoard.get(coordinatePair);
+    }
+
+    public Player currentPlayer(){
+        return this.currentPlayer;
+    }
+
+    public List<Move> getAllLegalMoves() {
+        List<Move> allLegalMoves = Stream.concat(whitePlayer.getLegalMoves().stream(), blackPlayer.getLegalMoves().stream()).toList();
+        return allLegalMoves;
+
     }
 
     public static class Builder {
