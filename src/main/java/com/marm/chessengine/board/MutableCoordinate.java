@@ -54,11 +54,17 @@ public class MutableCoordinate {
        return Objects.hash(x,y);
    }
 
+   @Override
+   public String toString(){
+       return String.format("(%d,%d)", this.x,this.y);
+   }
+
 
     public static void main(String[] args) {
         MutableCoordinate p1 = new MutableCoordinate(5,3);
-        MutableCoordinate p2 = new MutableCoordinate(5,3);
-        System.out.println(p1.equals(p2));
+//        MutableCoordinate p2 = new MutableCoordinate(5,3);
+        System.out.println(p1.equals(new MutableCoordinate(5,3)));
+        System.out.println(p1);
 
 
     }

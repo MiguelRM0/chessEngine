@@ -122,11 +122,21 @@ public abstract class Piece{
     public enum PieceType{
         PAWN("P") {
             @Override
+            public boolean isRook() {
+                return false;
+            }
+
+            @Override
             public boolean isKing() {
                 return false;
             }
         },
         KNIGHT("N") {
+            @Override
+            public boolean isRook() {
+                return false;
+            }
+
             @Override
             public boolean isKing() {
                 return false;
@@ -134,11 +144,21 @@ public abstract class Piece{
         },
         BISHOP("B") {
             @Override
+            public boolean isRook() {
+                return false;
+            }
+
+            @Override
             public boolean isKing() {
                 return false;
             }
         },
         ROOK("R") {
+            @Override
+            public boolean isRook() {
+                return true;
+            }
+
             @Override
             public boolean isKing() {
                 return false;
@@ -146,11 +166,21 @@ public abstract class Piece{
         },
         QUEEN("Q") {
             @Override
+            public boolean isRook() {
+                return false;
+            }
+
+            @Override
             public boolean isKing() {
                 return false;
             }
         },
         KING("K") {
+            @Override
+            public boolean isRook() {
+                return false;
+            }
+
             @Override
             public boolean isKing() {
                 return true;
@@ -166,7 +196,8 @@ public abstract class Piece{
         public String toString(){
              return this.pieceName;
         }
-
+        public abstract boolean isRook();
         public abstract boolean isKing();
+
     }
 }

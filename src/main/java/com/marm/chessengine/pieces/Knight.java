@@ -33,6 +33,7 @@ public class Knight extends Piece{
         super(pieceXCord, pieceYCord, alliance,PieceType.KNIGHT);
     }
 
+
     @Override
     public List<Move> calculateLegalMoves(final Board board) {
         final List<Move> legalMoves = new ArrayList<>();

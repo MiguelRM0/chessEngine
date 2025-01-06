@@ -1,17 +1,13 @@
 /******************************************
- *CSCI 205 - Software Engineering and Design
- *Spring 2024
- *Instructor: Prof. Lily Romano / Prof. Joshua Stough
- *
  *Name: Miguel Romero
- *Section: 01
  *Date: 12/30/24
- *Time: 7:42 PM
+ *Time: 7:42PM
  *
  *Project: chessEngine
  *Package: com.marm.chessengine.board
  *Class: Baord
  *Description:
+ * Board used in chess engine implemented with  the Builder Design pattern
  * **************************************** */
 package com.marm.chessengine.board;
 
@@ -43,7 +39,7 @@ public class Board {
         final Collection<Move> blackStandardLegalMoves = calculateLegalMoves(this.blackPieces);
         this.whitePlayer = new WhitePlayer(this, whiteStandardLegalMoves, blackStandardLegalMoves);
         this.blackPlayer = new BlackPlayer(this, whiteStandardLegalMoves, blackStandardLegalMoves);
-        this.currentPlayer  = builder.nextMoveMaker.choosePlayer(this.whitePlayer,this.blackPlayer);
+        this.currentPlayer = builder.nextMoveMaker.choosePlayer(this.whitePlayer,this.blackPlayer);
 
     }
 
@@ -177,6 +173,8 @@ public class Board {
         Map<MutableCoordinate, Piece> boardConfig;
         Alliance nextMoveMaker;
 
+        Pawn enPassantPawn;
+
         public  Builder() {
             this.boardConfig = new HashMap<>();
 
@@ -196,17 +194,16 @@ public class Board {
         public Board build(){
             return new Board(this);
         }
+
+        public void setEnPassantPawn(Pawn movedPawn) {
+            this.enPassantPawn = movedPawn;
+        }
     }
 
     public static void main(String[] args) {
-//        int[] test = new int[5];
-        Tile[] test = new Tile[5];
-        System.out.println(Arrays.toString(test));
-
-        Board board = new Board(new Builder());
-        board.gameBoard.size();
-
-        Map<List<Integer>,Integer> testing = new HashMap<>();
+//        int[] test = new int[5]
+        Board testBoard = new Board.Builder().build();
+        System.out.println(testBoard);
     }
 
 }

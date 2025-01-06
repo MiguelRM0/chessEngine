@@ -12,4 +12,8 @@ module com.marm.chessengine {
     exports com.marm.chessengine.FXML;
     opens com.marm.chessengine.FXML to javafx.fxml;
     exports com.marm.chessengine;
+    exports com.marm.gui;
+    opens com.marm.gui to javafx.fxml;
+    exports com.marm.gui.FXML;
+    opens com.marm.gui.FXML to javafx.fxml;
 }

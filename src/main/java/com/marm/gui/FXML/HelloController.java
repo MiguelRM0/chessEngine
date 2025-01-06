@@ -1,4 +1,4 @@
-package com.marm.chessengine.FXML;
+package com.marm.gui.FXML;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;

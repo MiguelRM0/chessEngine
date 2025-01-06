@@ -22,9 +22,22 @@ public abstract class Tile {
                 EmptyTile emptyTile = new EmptyTile(i,j);
                 emptyTileMap.put(coordinate, emptyTile);
             }
+
         }
 
         return Collections.unmodifiableMap(emptyTileMap);
+    }
+
+    private String emptyTileCoordinateMap(){
+        StringBuilder result = new StringBuilder();
+        for ( int i = 0; i < BoardUtils.NUM_TILES_PER_ROW; i++){
+            for (int j = 0; j < BoardUtils.NUM_TILES_PER_ROW; j++){
+                result.append(new MutableCoordinate(i,j));
+            }
+            result.append("\n");
+
+        }
+        return result.toString();
     }
 
     public static Tile createTile(final int xCoord, final int yCoord, final Piece piece){
@@ -68,6 +81,8 @@ public abstract class Tile {
     }
 
 
+
+
     public static final class OccupiedTile extends Tile{
 
         private final Piece pieceOnTile;
@@ -89,8 +104,9 @@ public abstract class Tile {
     }
 
 public static void main(String[] args) {
-    Tile tile = new EmptyTile(1, 1);
-    System.out.println(tile.getEmptyTileMap().values().size());
+
+    Tile emptyTile = new EmptyTile(5,3);
+    System.out.println(emptyTile.emptyTileCoordinateMap());
 
     }
 }
