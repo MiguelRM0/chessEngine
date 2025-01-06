@@ -13,7 +13,7 @@
  *Class: JavaFX
  *Description:
  * **************************************** */
-package com.marm.gui.FXML;
+package com.marm.gui.Practice;
 
 import javafx.application.Application;
 import javafx.beans.property.IntegerProperty;

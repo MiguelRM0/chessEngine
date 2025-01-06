@@ -13,7 +13,7 @@
  *Class: ConfirmBox
  *Description:
  * **************************************** */
-package com.marm.gui.FXML;
+package com.marm.gui.Practice;
 
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
