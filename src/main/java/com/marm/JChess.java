@@ -13,15 +13,17 @@
  *Class: JChess
  *Description:
  * **************************************** */
-package com.marm.chessengine;
+package com.marm;
 
 import com.marm.chessengine.board.Board;
 import com.marm.chessengine.board.MutableCoordinate;
 import com.marm.chessengine.board.Tile;
 
+import java.io.IOException;
+
 public class JChess {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         Board board = Board.createStandardBoard();
         System.out.println(board);
 

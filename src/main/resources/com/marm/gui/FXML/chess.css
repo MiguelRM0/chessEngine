@@ -1,3 +1,19 @@
 #chessBoardGrid{
     -fx-grid-lines-visible: true;
 }
+
+#backGroundAnchorPain{
+    -fx-background-color: black;
+}
+
+.label{
+    -fx-background-color: white;
+}
+
+#stackPaneGreen{
+    -fx-background-color: #769656;
+}
+
+#stackPaneOffWhite{
+    -fx-background-color: #eeeed2;
+}
