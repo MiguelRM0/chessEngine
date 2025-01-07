@@ -17,7 +17,9 @@ package com.marm.gui.FXML;
 
 import com.marm.chessengine.board.Move;
 import com.marm.chessengine.board.MutableCoordinate;
-import javafx.event.ActionEvent;
+import com.marm.chessengine.board.Tile;
+import com.marm.gui.logic.ChessBoardInitializer;
+import com.marm.gui.logic.TileHighLighter;
 import javafx.fxml.FXML;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
@@ -38,6 +40,8 @@ public class ChessController {
 
     public MenuItem darkMode;
 
+    public  TileHighLighter tileHighLighter;
+
     @FXML
     public void initialize(){
         setChessBoardGrid();
@@ -45,6 +49,8 @@ public class ChessController {
         backGroundAnchorPane.getStyleClass().add("dark-mode");
 //        mainBorderPane.getStyleClass().add("dark-mode");
         mainBorderPane.getStyleClass().add("customBorderPane");
+        tileHighLighter = new TileHighLighter(chessBoardInitializer.getBoard(), chessBoardInitializer.getGridMapCoordToPane(), null);
+//        tileHighLighter = new TileHighLighter(chessBoardInitializer.getBoard(), chessBoardInitializer.getGridMapCoordToPane());
         setClickOnStackPane();
 
     }
@@ -55,36 +61,11 @@ public class ChessController {
     }
 
     public void setClickOnStackPane(){
-        for (Map.Entry<MutableCoordinate,  StackPane> entry : chessBoardInitializer.getCoordinateStackPair().entrySet()){
+        for (Map.Entry<MutableCoordinate,  StackPane> entry : chessBoardInitializer.getGridMapCoordToPane().entrySet()){
             entry.getValue().setOnMouseClicked(mouseEvent -> {
-                System.out.println("You clicked " + entry.getKey() + " coordinate");
-                MutableCoordinate chessCoordinate = new MutableCoordinate(entry.getKey().getY(), entry.getKey().getX());
-                System.out.print(chessBoardInitializer.getBoard().getTile(chessCoordinate).getPiece() + " ");
-                if (chessBoardInitializer.getBoard().getTile(chessCoordinate).getPiece() != null) {
-                    System.out.println(chessBoardInitializer.getBoard().getTile(chessCoordinate).getPiece().getPieceAlliance());
-                }
-
-                if(chessBoardInitializer.getBoard().getTile(chessCoordinate).isTileOccupied()){
-                    for (Move move :chessBoardInitializer.getBoard().getTile(chessCoordinate).getPiece().calculateLegalMoves(chessBoardInitializer.getBoard())){
-//                        chessBoardInitializer.getCoordinateStackPair().get(move.getDestinationCoordinate()).getStyleClass().removeAll();
-//                        chessBoardInitializer.getCoordinateStackPair().get(move.getDestinationCoordinate()).getStyleClass().add("high-lighted-tile");
-//                        move.getDestinationCoordinate();
-                        MutableCoordinate reverse = new MutableCoordinate(move.getDestinationCoordinate().getY(), move.getDestinationCoordinate().getX());
-                        System.out.println("Coordinate " + reverse );
-                        System.out.print("The id is " + chessBoardInitializer.getCoordinateStackPair().get(reverse).getId());
-                        System.out.println(chessBoardInitializer.getCoordinateStackPair().get(reverse));
-//
-//                        destinationStackPane.applyCss();
-//                        destinationStackPane.layout();
-                        StackPane destinationStackPane = chessBoardInitializer.getCoordinateStackPair().get(reverse);
-                        destinationStackPane.getStyleClass().removeAll();
-                        destinationStackPane.setId("high-lighted-tile");
-                        destinationStackPane.applyCss();
-
-                        System.out.println(destinationStackPane.getStyleClass().toString());
-                    }
-
-                }
+//                tileHighLighter.highLightDestinationTiles(entry);
+//                tileHighLighter.turnEmAllRed();
+                tileHighLighter.setPiece(chessBoardInitializer.getBoard().getTile(new MutableCoordinate(entry.getKey().getY(), entry.getKey().getX())).getPiece());
             });
 
         }

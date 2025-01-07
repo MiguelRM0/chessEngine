@@ -13,7 +13,7 @@
  *Class: ChessBoardInitializer
  *Description:
  * **************************************** */
-package com.marm.gui.FXML;
+package com.marm.gui.logic;
 
 import com.marm.chessengine.Alliance;
 import com.marm.chessengine.board.Board;
@@ -27,12 +27,13 @@ import java.util.*;
 
 public class ChessBoardInitializer {
 
-    private Map<MutableCoordinate,StackPane> coordinateStackPair;
+    private Map<MutableCoordinate,StackPane> gridMapCordToPane;
 
     private Board board;
 
+
     public ChessBoardInitializer() {
-        coordinateStackPair = new HashMap<>();
+        gridMapCordToPane = new HashMap<>();
     }
     
 
@@ -50,15 +51,15 @@ public class ChessBoardInitializer {
 
 
                 MutableCoordinate gridSetUpCord = new MutableCoordinate(currentCoordinate.getY(), currentCoordinate.getX());
-                coordinateStackPair.put(gridSetUpCord, stackPane);
+                gridMapCordToPane.put(gridSetUpCord, stackPane);
 
                 chessBoardGrid.add(stackPane, gridSetUpCord.getX(),gridSetUpCord.getY());
             }
         }
     }
 
-    public Map<MutableCoordinate, StackPane> getCoordinateStackPair(){
-        return this.coordinateStackPair;
+    public Map<MutableCoordinate, StackPane> getGridMapCoordToPane(){
+        return this.gridMapCordToPane;
     }
 
     public Board getBoard(){
@@ -94,11 +95,6 @@ public class ChessBoardInitializer {
         return stackPane;
     }
 
-    private void setUpStack(){
-        for (StackPane stackPane: coordinateStackPair.values()){
-            stackPane.setOnMouseClicked(stackPane.getOnMouseClicked());
-        }
-    }
 
 
 }
