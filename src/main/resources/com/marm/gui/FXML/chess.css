@@ -10,10 +10,10 @@
     -fx-background-color: white;
 }
 
-#stackPaneGreen{
+#evenSquareGreen{
     -fx-background-color: #769656;
 }
 
-#stackPaneOffWhite{
+#oddSquareOffWhite{
     -fx-background-color: #eeeed2;
 }

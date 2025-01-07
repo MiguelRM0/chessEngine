@@ -17,21 +17,26 @@ package com.marm.chessengine.pieces;
 
 import com.marm.chessengine.Alliance;
 import com.marm.chessengine.board.*;
+import javafx.scene.image.Image;
 import javafx.util.Pair;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 import static com.marm.chessengine.board.Move.*;
 
 public class Knight extends Piece{
 
     private final static int[][] CANDIDATE_MOVE_COORDINATES = {{2, 1}, {2, -1}, {-2, 1}, {-2, -1}, {1, 2}, {1, -2}, {-1, 2}, {-1, -2}};
+    private final Image knightImgWhite = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/marm/gui/images/Knight/chess_knight_white.png")));
+    private final Image knightImgBlack = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/marm/gui/images/Knight/chess_knight_black.png")));
 
     public Knight(final int pieceXCord, final int pieceYCord, final Alliance alliance) {
         super(pieceXCord, pieceYCord, alliance,PieceType.KNIGHT);
     }
+
 
 
     @Override
@@ -68,6 +73,15 @@ public class Knight extends Piece{
         return new Knight(move.getDestinationCoordinate().getX(),move.getDestinationCoordinate().getY(),move.getMovedPiece().getPieceAlliance());
     }
 
+    @Override
+    public Image getBlackImg() {
+        return knightImgBlack;
+    }
+
+    @Override
+    public Image getWhiteImg() {
+        return knightImgWhite;
+    }
 
 
     @Override

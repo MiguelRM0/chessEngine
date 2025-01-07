@@ -19,21 +19,18 @@ import com.marm.chessengine.Alliance;
 import com.marm.chessengine.board.*;
 import javafx.scene.image.Image;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 public class Rook extends Piece{
     private final static int[][] CANDIDATE_MOVE_VECTOR_COORDINATES = {{1,0}, {-1,0}, {0,1}, {0,-1}};
 
-//    private final Image ROOK_IMG = new Image("com.marm.gui.images.rook_img.png");
+    private final Image rookImgWhite = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/marm/gui/images/Rook/chess_rook_white.png")));
+    private final Image rookImgBlack = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/marm/gui/images/Rook/chess_rook_black.png")));
     public Rook(int pieceXCord, int pieceYCord, Alliance alliance) {
         super(pieceXCord, pieceYCord, alliance,PieceType.ROOK);
     }
 
-//    public Image getROOK_IMG(){
-//        return this.ROOK_IMG;
-//    }
 
     @Override
     public List<Move> calculateLegalMoves(final Board board) {
@@ -43,6 +40,16 @@ public class Rook extends Piece{
     @Override
     public Rook movePiece(final Move move) {
         return new Rook(move.getDestinationCoordinate().getX(),move.getDestinationCoordinate().getY(),move.getMovedPiece().getPieceAlliance());
+    }
+
+    @Override
+    public Image getBlackImg() {
+        return rookImgBlack;
+    }
+
+    @Override
+    public Image getWhiteImg() {
+        return rookImgWhite;
     }
 
     @Override

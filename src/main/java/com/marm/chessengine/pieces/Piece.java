@@ -2,6 +2,7 @@ package com.marm.chessengine.pieces;
 
 import com.marm.chessengine.Alliance;
 import com.marm.chessengine.board.*;
+import javafx.scene.image.Image;
 import javafx.util.Pair;
 
 import java.util.ArrayList;
@@ -57,6 +58,10 @@ public abstract class Piece{
 
     public abstract Piece movePiece(Move move);
 
+    public abstract Image getBlackImg();
+
+    public abstract Image getWhiteImg();
+
 
     protected List<Move> legalMovesQRB(final Board board, int[][] CANDIDATE_MOVE_VECTOR_COORDINATES){
         final List<Move> legalMoves = new ArrayList<>();
@@ -110,6 +115,8 @@ public abstract class Piece{
         return this.cacheHashCode;
 
     }
+
+
 
 
     public boolean isFirstMove() {

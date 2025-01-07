@@ -17,13 +17,18 @@ package com.marm.chessengine.pieces;
 
 import com.marm.chessengine.Alliance;
 import com.marm.chessengine.board.*;
+import javafx.scene.image.Image;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 public class King extends Piece{
     private final static int[][] CANDIDATE_MOVE_COORDINATES = {{1,1}, {1,-1}, {-1,1}, {-1,-1}, {1,0}, {-1,0}, {0,1}, {0,-1}};
+
+    private final Image kingImgWhite = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/marm/gui/images/King/chess_king_white.png")));
+    private final Image kingImgBlack = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/marm/gui/images/King/chess_king_black.png")));
     public King(final int pieceXCord, final int pieceYCord, final Alliance alliance) {
         super(pieceXCord, pieceYCord, alliance, PieceType.KING);
     }
@@ -56,8 +61,19 @@ public class King extends Piece{
         return Collections.unmodifiableList(legalMoves);
     }
 
+
     public King movePiece(final Move move) {
         return new King(move.getDestinationCoordinate().getX(),move.getDestinationCoordinate().getY(),move.getMovedPiece().getPieceAlliance());
+    }
+
+    @Override
+    public Image getBlackImg() {
+        return this.kingImgBlack;
+    }
+
+    @Override
+    public Image getWhiteImg() {
+        return this.kingImgWhite;
     }
 
     @Override

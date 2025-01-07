@@ -20,16 +20,17 @@ import com.marm.chessengine.board.Board;
 import com.marm.chessengine.board.BoardUtils;
 import com.marm.chessengine.board.Move;
 import com.marm.chessengine.board.MutableCoordinate;
+import javafx.scene.image.Image;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 import static com.marm.chessengine.board.Move.*;
 
 public class Pawn extends Piece{
     private final static int[][] CANDIDATE_MOVE_COORDINATES = {{1,0} ,{2,0}, {1,1}, {1,-1}};
+
+    private final Image pawnImgWhite = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/marm/gui/images/Pawn/chess_pawn_white.png")));
+    private final Image pawnImgBlack = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/marm/gui/images/Pawn/chess_pawn_black.png")));
     public Pawn( final int pieceXCord, final int pieceYCord, final Alliance alliance) {
         super(pieceXCord, pieceYCord, alliance, PieceType.PAWN);
     }
@@ -81,6 +82,16 @@ public class Pawn extends Piece{
     @Override
     public Pawn movePiece(final Move move) {
         return new Pawn(move.getDestinationCoordinate().getX(),move.getDestinationCoordinate().getY(),move.getMovedPiece().getPieceAlliance());
+    }
+
+    @Override
+    public Image getBlackImg() {
+        return pawnImgBlack;
+    }
+
+    @Override
+    public Image getWhiteImg() {
+        return pawnImgWhite;
     }
 
 

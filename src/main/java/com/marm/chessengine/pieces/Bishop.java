@@ -17,16 +17,17 @@ package com.marm.chessengine.pieces;
 
 import com.marm.chessengine.Alliance;
 import com.marm.chessengine.board.*;
+import javafx.scene.image.Image;
 import javafx.util.Pair;
 
 import java.security.Permission;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Bishop extends Piece {
     private final static int[][] CANDIDATE_MOVE_VECTOR_COORDINATES = {{1,1}, {1,-1}, {-1,1}, {-1,-1}};
+
+    private final Image bishopImgWhite = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/marm/gui/images/Bishop/chess_bishop_white.png")));
+    private final Image bishopImgBlack = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/marm/gui/images/Bishop/chess_bishop_black.png")));
     public Bishop(int pieceXCord, int pieceYCord, Alliance alliance) {
         super(pieceXCord, pieceYCord, alliance, PieceType.BISHOP);
     }
@@ -36,9 +37,21 @@ public class Bishop extends Piece {
         return this.legalMovesQRB(board, CANDIDATE_MOVE_VECTOR_COORDINATES);
     }
 
+
+
     @Override
     public Bishop movePiece(final Move move) {
         return new Bishop(move.getDestinationCoordinate().getX(),move.getDestinationCoordinate().getY(),move.getMovedPiece().getPieceAlliance());
+    }
+
+    @Override
+    public Image getBlackImg() {
+        return this.bishopImgBlack;
+    }
+
+    @Override
+    public Image getWhiteImg() {
+        return this.bishopImgWhite;
     }
 
     @Override
