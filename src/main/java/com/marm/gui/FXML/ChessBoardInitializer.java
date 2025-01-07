@@ -19,8 +19,6 @@ import com.marm.chessengine.Alliance;
 import com.marm.chessengine.board.Board;
 import com.marm.chessengine.board.BoardUtils;
 import com.marm.chessengine.board.MutableCoordinate;
-import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
@@ -29,9 +27,9 @@ import java.util.*;
 
 public class ChessBoardInitializer {
 
-    public Map<MutableCoordinate,StackPane> coordinateStackPair;
+    private Map<MutableCoordinate,StackPane> coordinateStackPair;
 
-    Board board;
+    private Board board;
 
     public ChessBoardInitializer() {
         coordinateStackPair = new HashMap<>();
@@ -46,7 +44,7 @@ public class ChessBoardInitializer {
             for (int j = 0; j < BoardUtils.NUM_TILES_PER_ROW; j++) {
                 MutableCoordinate currentCoordinate = new MutableCoordinate(i, j);
 
-                ImageView imageView = getBoardImages(currentCoordinate);
+                ImageView imageView = getBoardImage(currentCoordinate);
                 StackPane stackPane = tileColorSetUp( currentCoordinate);
                 stackPane.getChildren().add(imageView);
 
@@ -59,7 +57,17 @@ public class ChessBoardInitializer {
         }
     }
 
-    private ImageView getBoardImages(MutableCoordinate currentCoordinate) {
+    public Map<MutableCoordinate, StackPane> getCoordinateStackPair(){
+        return this.coordinateStackPair;
+    }
+
+    public Board getBoard(){
+        return this.board;
+    }
+
+
+
+    private ImageView getBoardImage(MutableCoordinate currentCoordinate) {
         ImageView imageView = new ImageView();
         if (this.board.getTile(currentCoordinate).isTileOccupied()){
             if (this.board.getTile(currentCoordinate).getPiece().getPieceAlliance()== Alliance.WHITE) {
@@ -78,12 +86,18 @@ public class ChessBoardInitializer {
         StackPane stackPane = new StackPane();
 
         if ((currentCoordinate.getX() + currentCoordinate.getY()) % 2 == 0) {
-            stackPane.setId("evenSquareGreen");
+            stackPane.getStyleClass().add("evenSquareGreen");
         } else {
-            stackPane.setId("oddSquareOffWhite");
+            stackPane.getStyleClass().add("oddSquareOffWhite");
         }
 
         return stackPane;
+    }
+
+    private void setUpStack(){
+        for (StackPane stackPane: coordinateStackPair.values()){
+            stackPane.setOnMouseClicked(stackPane.getOnMouseClicked());
+        }
     }
 
 

@@ -1,19 +1,42 @@
 #chessBoardGrid{
-    -fx-grid-lines-visible: true;
+    -fx-grid-lines-visible: false;
 }
 
-#backGroundAnchorPain{
-    -fx-background-color: black;
+.dark-mode{
+    -fx-border-radius: 2;
+    -fx-background-color: #181818;
+    -fx-border-color: white;
+}
+
+.light-mode{
+    -fx-background-color: white;
+    -fx-border-color: #181818;
 }
 
 .label{
     -fx-background-color: white;
 }
 
-#evenSquareGreen{
+.mainBorderPane {
+    -fx-border-color: red;
+}
+#chessBoardGrid {
+    -fx-border-color: white;
+    -fx-border-width: 2;
+
+}
+
+#high-lighted-tile{
+    -fx-background-color: red;
+}
+
+.borderPane{
+    -fx-border-color: red;
+}
+.evenSquareGreen{
     -fx-background-color: #769656;
 }
 
-#oddSquareOffWhite{
+.oddSquareOffWhite{
     -fx-background-color: #eeeed2;
 }
