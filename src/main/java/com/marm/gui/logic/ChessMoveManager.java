@@ -34,6 +34,7 @@ public class ChessMoveManager {
 
     public ChessMoveManager(Board board,
                             Map<MutableCoordinate, StackPane> gridMapCordToPane){
+
         this.board = board;
         this.gridMapCordToPane = gridMapCordToPane;
         this.tileState= TileState.NOT_ON_SOURCE_TILE;
@@ -41,6 +42,33 @@ public class ChessMoveManager {
 
     public void setBoard(Board board){
         this.board = board;
+    }
+
+    public void processTileClick(Map.Entry<MutableCoordinate, StackPane> entry) {
+        MutableCoordinate currentEntryOnEngine =  new MutableCoordinate(entry.getKey().getX(), entry.getKey().getY());
+        if(createChessMove != null){
+            createChessMove.getTileHighLighter().removeHighLightTiles();
+        }
+        // Not on any piece tile create new source tile and change state
+        if(tileState == TileState.NOT_ON_SOURCE_TILE && board.getTile(currentEntryOnEngine).isTileOccupied()){
+            tileState = TileState.ON_SOURCE_TILE;
+            createChessMove = new CreateChessMove(board,board.getTile(currentEntryOnEngine).getPiece(), gridMapCordToPane);
+            // On a source tile but clicked new piece change source tile
+        }else if (tileState == TileState.ON_SOURCE_TILE && board.getTile(currentEntryOnEngine).isTileOccupied() ){
+            createChessMove = new CreateChessMove(board,board.getTile(currentEntryOnEngine).getPiece(), gridMapCordToPane);
+            // On source tile clicked empty source tile possible destination
+        }else if (tileState == TileState.ON_SOURCE_TILE  && !board.getTile(currentEntryOnEngine).isTileOccupied() ){
+            this.board = createChessMove.createMove(currentEntryOnEngine);
+            tileState = TileState.NOT_ON_SOURCE_TILE;
+        }
+    }
+
+    public Map<MutableCoordinate, StackPane> getGridMapCordToPane(){
+        return this.gridMapCordToPane;
+    }
+
+    public Board getBoard(){
+        return this.board;
     }
 
 

@@ -32,7 +32,9 @@ public class TileHighLighter {
         this.board  = board;
         this.piece = piece;
         destinationStackPanes = calcDestinationPane();
-        setHighLightTiles();
+        if (board.currentPlayer().getActivePieces().contains(piece)) {
+            setHighLightTiles();
+        }
 
     }
     public List<StackPane> getDestinationStackPanes(){

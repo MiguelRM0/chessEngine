@@ -23,42 +23,38 @@ import java.util.Map;
 
 public class CreateChessMove {
 
-    private final Map<MutableCoordinate, StackPane> gridMapCordToPane;
-
     private final Board board;
 
     private final Piece movedPiece;
-
 
 
     private final TileHighLighter tileHighLighter;
 
     private final List<StackPane> destinationStackPanes;
 
-    private  MutableCoordinate destinationCoordinates;
+
 
 
     public CreateChessMove(Board board, Piece piece, Map<MutableCoordinate, StackPane> gridMapCordToPane){
         this.board = board;
         this.movedPiece = piece;
-        this.gridMapCordToPane = gridMapCordToPane;
-        tileHighLighter = new TileHighLighter(this.board, this.gridMapCordToPane, piece);
+        tileHighLighter = new TileHighLighter(this.board, gridMapCordToPane, this.movedPiece);
         destinationStackPanes = tileHighLighter.getDestinationStackPanes();
 
+
     }
 
-    public void setDestinationCoordinate(MutableCoordinate destinationCoordinate){
-        this.destinationCoordinates = destinationCoordinate;
-        createMove();
-    }
 
-    public Board createMove(){
-        final Move move = Move.MoveFactory.createMove(board, movedPiece.getPieceCoordinatePair(), destinationCoordinates);
+    public Board createMove(MutableCoordinate destinationCoordinate){
+        final Move move = Move.MoveFactory.createMove(board, movedPiece.getPieceCoordinatePair(), destinationCoordinate);
         final MoveTransition transition = board.currentPlayer().makeMove(move);
+        // If valid move do move and return new chessBoard
         if(transition.getMoveStatus().isDone()){
-//            board = transition.getTransitionBoard();
+            //TODO add the move that was made to the move log
             return transition.getTransitionBoard();
+
         }
+        // Else not valid move keep chess board
         return board;
     }
 
