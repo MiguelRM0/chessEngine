@@ -45,13 +45,11 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public Image getBlackImg() {
-        return this.bishopImgBlack;
-    }
-
-    @Override
-    public Image getWhiteImg() {
-        return this.bishopImgWhite;
+    public Image getImage() {
+        if (this.pieceAlliance == Alliance.WHITE){
+            return bishopImgWhite;
+        }
+        return bishopImgBlack;
     }
 
     @Override

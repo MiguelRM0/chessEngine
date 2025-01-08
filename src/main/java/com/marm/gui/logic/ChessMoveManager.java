@@ -16,9 +16,7 @@
 package com.marm.gui.logic;
 
 import com.marm.chessengine.board.Board;
-import com.marm.chessengine.board.Move;
 import com.marm.chessengine.board.MutableCoordinate;
-import com.marm.chessengine.player.MoveTransition;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 
@@ -32,7 +30,7 @@ public class ChessMoveManager {
 
     private  CreateChessMove createChessMove;
 
-    private TileState tileState;
+    private TileClickState tileClickState;
 
     private Map<MutableCoordinate, StackPane> gridMapCordToPane;
 
@@ -43,7 +41,7 @@ public class ChessMoveManager {
         this.board = board;
         this.gridMapCordToPane = gridMapCordToPane;
         this.gridPane= gridPane;
-        this.tileState= TileState.NOT_ON_SOURCE_TILE;
+        this.tileClickState = TileClickState.NOT_ON_SOURCE_TILE;
     }
 
     public void setBoard(Board board){
@@ -58,18 +56,22 @@ public class ChessMoveManager {
             createChessMove.getTileHighLighter().removeHighLightTiles();
         }
         // Not on any piece tile create new source tile and change state
-        if(tileState == TileState.NOT_ON_SOURCE_TILE && board.getTile(currentEntryOnEngine).isTileOccupied()){
-            tileState = TileState.ON_SOURCE_TILE;
+        if(tileClickState == TileClickState.NOT_ON_SOURCE_TILE && board.getTile(currentEntryOnEngine).isTileOccupied()){
+            tileClickState = TileClickState.ON_SOURCE_TILE;
             createChessMove = new CreateChessMove(board,board.getTile(currentEntryOnEngine).getPiece(), gridMapCordToPane);
             // On a source tile but clicked new piece change source tile
-        }else if (tileState == TileState.ON_SOURCE_TILE && board.getTile(currentEntryOnEngine).isTileOccupied() ){
+        }else if (tileClickState == TileClickState.ON_SOURCE_TILE && board.getTile(currentEntryOnEngine).isTileOccupied() ){
             createChessMove = new CreateChessMove(board,board.getTile(currentEntryOnEngine).getPiece(), gridMapCordToPane);
             // On source tile clicked empty source tile possible destination
-        }else if (tileState == TileState.ON_SOURCE_TILE  && !board.getTile(currentEntryOnEngine).isTileOccupied() ){
+        }else if (tileClickState == TileClickState.ON_SOURCE_TILE  && !board.getTile(currentEntryOnEngine).isTileOccupied() ){
             this.board = createChessMove.createMove(currentEntryOnEngine);
-            this.gridMapCordToPane = ChessBoardInitializer.drawBoard(gridPane, this.board);
-            tileState = TileState.NOT_ON_SOURCE_TILE;
+//            ChessBoardInitializer.drawBoard(this.gridPane, this.board);
+            tileClickState = TileClickState.NOT_ON_SOURCE_TILE;
         }
+    }
+
+    public void setGridMapCordToPane(Map<MutableCoordinate , StackPane> gridMapCordToPane){
+        this.gridMapCordToPane = gridMapCordToPane;
     }
 
     public Map<MutableCoordinate, StackPane> getGridMapCordToPane(){

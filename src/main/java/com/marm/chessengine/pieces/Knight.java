@@ -74,13 +74,11 @@ public class Knight extends Piece{
     }
 
     @Override
-    public Image getBlackImg() {
+    public Image getImage() {
+        if (this.pieceAlliance == Alliance.WHITE){
+            return knightImgWhite;
+        }
         return knightImgBlack;
-    }
-
-    @Override
-    public Image getWhiteImg() {
-        return knightImgWhite;
     }
 
 

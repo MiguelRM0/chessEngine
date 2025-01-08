@@ -15,22 +15,17 @@
  * **************************************** */
 package com.marm.gui.FXML;
 
-import com.marm.chessengine.board.Board;
-import com.marm.chessengine.board.Move;
 import com.marm.chessengine.board.MutableCoordinate;
-import com.marm.chessengine.player.MoveTransition;
+import com.marm.chessengine.pieces.Piece;
 import com.marm.gui.logic.ChessBoardInitializer;
 import com.marm.gui.logic.ChessMoveManager;
-import com.marm.gui.logic.CreateChessMove;
-import com.marm.gui.logic.TileState;
+import com.marm.gui.logic.TileProperty;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.*;
 
 import java.util.Map;
 
@@ -60,14 +55,43 @@ public class ChessController {
         chessBoardInitializer.initializeChessBoard(chessBoardGrid);
         chessMoveManager = new ChessMoveManager(chessBoardInitializer.getBoard(),chessBoardInitializer.getGridMapCordToPane(),chessBoardGrid);
 
-
-
     }
+
+    private void bindTilesToBoard() {
+        for (Map.Entry<MutableCoordinate, StackPane> entry : chessMoveManager.getGridMapCordToPane().entrySet()) {
+            MutableCoordinate coordinate = entry.getKey();
+            StackPane tilePane = entry.getValue();
+
+
+
+            // Get the TileState from the board
+            TileProperty tileProperty = chessBoardInitializer.getPropertyMap().get(coordinate);
+
+            // Bind the tile's graphical representation to the TileState
+            tileProperty.getPieceProperty().addListener((obs, oldPiece, newPiece) -> {
+                Platform.runLater(() -> updateTileDisplay(tilePane, newPiece));
+            });
+        }
+    }
+
+    private void updateTileDisplay(StackPane stackpane, Piece piece ){
+        stackpane.getChildren().clear();
+        if(piece != null){
+            ImageView imageView =new ImageView();
+//            imageView.setImage(piece.);
+//            stackpane.getChildren().add(piece.);
+        }
+    }
+
 
     public void setClickOnStackPane(){
         for (Map.Entry<MutableCoordinate,  StackPane> entry : chessMoveManager.getGridMapCordToPane().entrySet()){
             entry.getValue().setOnMouseClicked(mouseEvent -> {
-                     chessMoveManager.processTileClick(entry);
+                Platform.runLater(() -> {
+                    chessMoveManager.processTileClick(entry);
+                    // Reapply click handlers after updating the grid map
+                    setClickOnStackPane();
+                });
             });
 
         }

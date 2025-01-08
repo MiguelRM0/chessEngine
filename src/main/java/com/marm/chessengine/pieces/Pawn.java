@@ -83,16 +83,15 @@ public class Pawn extends Piece{
     public Pawn movePiece(final Move move) {
         return new Pawn(move.getDestinationCoordinate().getX(),move.getDestinationCoordinate().getY(),move.getMovedPiece().getPieceAlliance());
     }
-
     @Override
-    public Image getBlackImg() {
+    public Image getImage() {
+        if (this.pieceAlliance == Alliance.WHITE){
+            return pawnImgWhite;
+        }
         return pawnImgBlack;
     }
 
-    @Override
-    public Image getWhiteImg() {
-        return pawnImgWhite;
-    }
+
 
 
     public static void main(String[] args) {

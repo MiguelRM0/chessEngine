@@ -41,15 +41,12 @@ public class Rook extends Piece{
     public Rook movePiece(final Move move) {
         return new Rook(move.getDestinationCoordinate().getX(),move.getDestinationCoordinate().getY(),move.getMovedPiece().getPieceAlliance());
     }
-
     @Override
-    public Image getBlackImg() {
+    public Image getImage() {
+        if (this.pieceAlliance == Alliance.WHITE){
+            return rookImgWhite;
+        }
         return rookImgBlack;
-    }
-
-    @Override
-    public Image getWhiteImg() {
-        return rookImgWhite;
     }
 
     @Override

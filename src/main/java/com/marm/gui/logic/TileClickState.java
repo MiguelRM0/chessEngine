@@ -1,6 +1,6 @@
 package com.marm.gui.logic;
 
-public enum TileState {
+public enum TileClickState {
     NOT_ON_SOURCE_TILE,
     ON_SOURCE_TILE,
 

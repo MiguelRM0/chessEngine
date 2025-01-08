@@ -67,13 +67,11 @@ public class King extends Piece{
     }
 
     @Override
-    public Image getBlackImg() {
-        return this.kingImgBlack;
-    }
-
-    @Override
-    public Image getWhiteImg() {
-        return this.kingImgWhite;
+    public Image getImage() {
+        if (this.pieceAlliance == Alliance.WHITE){
+            return kingImgWhite;
+        }
+        return kingImgBlack;
     }
 
     @Override

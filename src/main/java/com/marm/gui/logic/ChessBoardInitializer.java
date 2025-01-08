@@ -14,6 +14,8 @@ import com.marm.chessengine.Alliance;
 import com.marm.chessengine.board.Board;
 import com.marm.chessengine.board.BoardUtils;
 import com.marm.chessengine.board.MutableCoordinate;
+import com.marm.chessengine.board.Tile;
+import javafx.beans.binding.Bindings;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
@@ -27,10 +29,17 @@ public class ChessBoardInitializer {
 
     private final Board board;
 
+    private final  Map<MutableCoordinate, TileProperty> propertyMap;
+
 
     public ChessBoardInitializer() {
         gridMapCordToPane = new HashMap<>();
         board = Board.createStandardBoard();
+        propertyMap= new HashMap<>();
+    }
+
+    public Map<MutableCoordinate, TileProperty> getPropertyMap(){
+        return this.propertyMap;
     }
     
 
@@ -38,8 +47,12 @@ public class ChessBoardInitializer {
 
         for (int i = 0; i < BoardUtils.NUM_TILES_PER_ROW; i++) {
             for (int j = 0; j < BoardUtils.NUM_TILES_PER_ROW; j++) {
-                MutableCoordinate currentCoordinate = new MutableCoordinate(i, j);
 
+                MutableCoordinate currentCoordinate = new MutableCoordinate(i, j);
+                TileProperty tileProperty = new TileProperty();
+                tileProperty.setPiece(this.board.getTile(currentCoordinate).getPiece());
+
+                propertyMap.put(currentCoordinate, tileProperty);
 
 
                 ImageView imageView = getBoardImage(currentCoordinate, this.board);
@@ -98,14 +111,9 @@ public class ChessBoardInitializer {
 
     public static ImageView getBoardImage(MutableCoordinate currentCoordinate, Board board) {
         ImageView imageView = new ImageView();
-        if (board.getTile(currentCoordinate).isTileOccupied()){
-            if (board.getTile(currentCoordinate).getPiece().getPieceAlliance()== Alliance.WHITE) {
-                imageView.setImage(board.getTile(currentCoordinate).getPiece().getWhiteImg());
-            }
-            else{
-                imageView.setImage(board.getTile(currentCoordinate).getPiece().getBlackImg());
 
-            }
+        if (board.getTile(currentCoordinate).isTileOccupied()){
+            imageView.setImage(board.getTile(currentCoordinate).getPiece().getImage());
 
         }
         return imageView;

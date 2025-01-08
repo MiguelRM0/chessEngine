@@ -58,9 +58,8 @@ public abstract class Piece{
 
     public abstract Piece movePiece(Move move);
 
-    public abstract Image getBlackImg();
+    public abstract Image getImage();
 
-    public abstract Image getWhiteImg();
 
 
     protected List<Move> legalMovesQRB(final Board board, int[][] CANDIDATE_MOVE_VECTOR_COORDINATES){

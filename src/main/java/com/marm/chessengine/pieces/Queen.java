@@ -45,14 +45,13 @@ public class Queen extends Piece{
     }
 
     @Override
-    public Image getBlackImg() {
+    public Image getImage() {
+        if (this.pieceAlliance == Alliance.WHITE){
+            return queenImgWhite;
+        }
         return queenImgBlack;
     }
 
-    @Override
-    public Image getWhiteImg() {
-        return queenImgWhite;
-    }
 
     @Override
     public String toString(){

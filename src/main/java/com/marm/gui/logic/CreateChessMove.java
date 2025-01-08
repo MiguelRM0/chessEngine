@@ -30,7 +30,6 @@ public class CreateChessMove {
 
     private final TileHighLighter tileHighLighter;
 
-    private final List<StackPane> destinationStackPanes;
 
 
 
@@ -39,7 +38,6 @@ public class CreateChessMove {
         this.board = board;
         this.movedPiece = piece;
         tileHighLighter = new TileHighLighter(this.board, gridMapCordToPane, this.movedPiece);
-        destinationStackPanes = tileHighLighter.getDestinationStackPanes();
 
 
     }
