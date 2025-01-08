@@ -15,9 +15,11 @@
  * **************************************** */
 package com.marm.gui.FXML;
 
+import com.marm.chessengine.board.Board;
 import com.marm.chessengine.board.MutableCoordinate;
 import com.marm.gui.logic.ChessBoardInitializer;
-import com.marm.gui.logic.TileHighLighter;
+import com.marm.gui.logic.CreateChessMove;
+import com.marm.gui.logic.TileState;
 import javafx.fxml.FXML;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
@@ -38,28 +40,53 @@ public class ChessController {
 
     public MenuItem darkMode;
 
-    public  TileHighLighter tileHighLighter;
+    public CreateChessMove createChessMove;
+
+    TileState tileState;
+
+    public Board board;
+
+    private Map<MutableCoordinate,StackPane> gridMapCordToPane;
+
+
+
+
 
     @FXML
     public void initialize(){
         setChessBoardGrid();
         setClickOnStackPane();
+        tileState = TileState.NOT_ON_SOURCE_TILE;
 
     }
     @FXML
     public void setChessBoardGrid(){
         chessBoardInitializer = new ChessBoardInitializer();
         chessBoardInitializer.initializeChessBoard(chessBoardGrid);
+        board = chessBoardInitializer.getBoard();
+        gridMapCordToPane = chessBoardInitializer.getGridMapCordToPane();
+
+
     }
 
     public void setClickOnStackPane(){
-        for (Map.Entry<MutableCoordinate,  StackPane> entry : chessBoardInitializer.getGridMapCordToPane().entrySet()){
+        for (Map.Entry<MutableCoordinate,  StackPane> entry : gridMapCordToPane.entrySet()){
             entry.getValue().setOnMouseClicked(mouseEvent -> {
-                if (chessBoardInitializer.getBoard().getTile(new MutableCoordinate(entry.getKey().getY(), entry.getKey().getX())).getPiece() != null){
-                    if (tileHighLighter != null){
-                        tileHighLighter.removeHighLightTiles();
-                    }
-                    tileHighLighter = new TileHighLighter(chessBoardInitializer.getBoard(), chessBoardInitializer.getGridMapCordToPane(),chessBoardInitializer.getBoard().getTile(new MutableCoordinate(entry.getKey().getY(), entry.getKey().getX())).getPiece());
+                MutableCoordinate currentEntryOnEngine =  new MutableCoordinate(entry.getKey().getY(), entry.getKey().getX());
+                if(createChessMove != null){
+                    createChessMove.getTileHighLighter().removeHighLightTiles();
+                }
+                // Not on any piece tile create new source tile and change state
+                if(tileState == TileState.NOT_ON_SOURCE_TILE && board.getTile(currentEntryOnEngine).getPiece() != null){
+                    tileState = TileState.ON_SOURCE_TILE;
+                    createChessMove = new CreateChessMove(board,board.getTile(currentEntryOnEngine).getPiece(), gridMapCordToPane);
+                // On a source tile but clicked new piece change source tile
+                }else if (tileState == TileState.ON_SOURCE_TILE && board.getTile(currentEntryOnEngine).getPiece() != null ){
+                    createChessMove = new CreateChessMove(board,board.getTile(currentEntryOnEngine).getPiece(), gridMapCordToPane);
+                // On source tile clicked empty source tile possible destination
+                }else if (tileState == TileState.ON_SOURCE_TILE  && board.getTile(currentEntryOnEngine).getPiece() ==  null ){
+                    createChessMove.setDestinationCoordinate(currentEntryOnEngine);
+                    tileState = TileState.NOT_ON_SOURCE_TILE;
                 }
             });
 

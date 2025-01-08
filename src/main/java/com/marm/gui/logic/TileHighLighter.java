@@ -1,12 +1,7 @@
 /******************************************
- *CSCI 205 - Software Engineering and Design
- *Spring 2024
- *Instructor: Prof. Lily Romano / Prof. Joshua Stough
- *
  *Name: Miguel Romero
- *Section: 01
  *Date: 1/7/25
- *Time: 4:40 AM
+ *Time: 4:40AM
  *
  *Project: chessEngine
  *Package: com.marm.gui.logic
@@ -39,6 +34,9 @@ public class TileHighLighter {
         destinationStackPanes = calcDestinationPane();
         setHighLightTiles();
 
+    }
+    public List<StackPane> getDestinationStackPanes(){
+        return this.destinationStackPanes;
     }
 
 

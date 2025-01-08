@@ -1,15 +1,10 @@
 /******************************************
- *CSCI 205 - Software Engineering and Design
- *Spring 2024
- *Instructor: Prof. Lily Romano / Prof. Joshua Stough
- *
  *Name: Miguel Romero
- *Section: 01
  *Date: 1/6/25
- *Time: 5:09 PM
+ *Time: 5:09PM
  *
  *Project: chessEngine
- *Package: com.marm.gui.FXML
+ *Package: com.marm.gui.logic
  *Class: ChessBoardInitializer
  *Description:
  * **************************************** */
