@@ -40,13 +40,14 @@ public class ChessBoardInitializer {
             for (int j = 0; j < BoardUtils.NUM_TILES_PER_ROW; j++) {
                 MutableCoordinate currentCoordinate = new MutableCoordinate(i, j);
 
-//                styleGridCell(chessBoardGrid,j,i);
 
 
                 ImageView imageView = getBoardImage(currentCoordinate, this.board);
-
                 StackPane stackPane = tileColorSetUp(currentCoordinate);
+
+//                StackPane stackPane = new StackPane();
                 stackPane.getChildren().add(imageView);
+
 
 
 
@@ -57,27 +58,31 @@ public class ChessBoardInitializer {
         }
     }
 
-    public static void drawBoard(GridPane chessBoardGrid, Board board){
+    public static Map<MutableCoordinate, StackPane> drawBoard(GridPane chessBoardGrid, Board board){
+        // Clear grid map and main grid
+        Map<MutableCoordinate, StackPane> gridMapCordToPane = new HashMap<>();
+        chessBoardGrid.getChildren().clear();
         for (int i = 0; i < BoardUtils.NUM_TILES_PER_ROW; i++){
             for (int j = 0; j< BoardUtils.NUM_TILES_PER_ROW; j++){
                 MutableCoordinate currentCoordinate = new MutableCoordinate(i,j);
+
                 ImageView imageView = ChessBoardInitializer.getBoardImage(currentCoordinate,board);
+                StackPane stackPane = tileColorSetUp(currentCoordinate);
+
+
+                stackPane.getChildren().add(imageView);
+                gridMapCordToPane.put(currentCoordinate, stackPane);
+                chessBoardGrid.add(stackPane, currentCoordinate.getY(),currentCoordinate.getX());
 
             }
         }
 
+        return gridMapCordToPane;
+
     }
 
-    private void styleGridCell(GridPane chessBoardGrid, int row, int col) {
-        String color = ((row + col) % 2 == 0) ? "#evenSquareGreen" : "oddSquareOffWhite"; // Example alternating colors
-        chessBoardGrid.add(createColoredRegion(color), col, row);
-    }
 
-    private StackPane createColoredRegion(String color) {
-        StackPane region = new StackPane();
-        region.getStyleClass().add(color);
-        return region;
-    }
+
 
 
 

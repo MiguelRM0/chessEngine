@@ -16,11 +16,14 @@
 package com.marm.gui.FXML;
 
 import com.marm.chessengine.board.Board;
+import com.marm.chessengine.board.Move;
 import com.marm.chessengine.board.MutableCoordinate;
+import com.marm.chessengine.player.MoveTransition;
 import com.marm.gui.logic.ChessBoardInitializer;
 import com.marm.gui.logic.ChessMoveManager;
 import com.marm.gui.logic.CreateChessMove;
 import com.marm.gui.logic.TileState;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
@@ -55,7 +58,7 @@ public class ChessController {
     public void setChessBoardGrid(){
         chessBoardInitializer = new ChessBoardInitializer();
         chessBoardInitializer.initializeChessBoard(chessBoardGrid);
-        chessMoveManager = new ChessMoveManager(chessBoardInitializer.getBoard(),chessBoardInitializer.getGridMapCordToPane());
+        chessMoveManager = new ChessMoveManager(chessBoardInitializer.getBoard(),chessBoardInitializer.getGridMapCordToPane(),chessBoardGrid);
 
 
 
@@ -64,12 +67,13 @@ public class ChessController {
     public void setClickOnStackPane(){
         for (Map.Entry<MutableCoordinate,  StackPane> entry : chessMoveManager.getGridMapCordToPane().entrySet()){
             entry.getValue().setOnMouseClicked(mouseEvent -> {
-                chessMoveManager.processTileClick(entry);
+                     chessMoveManager.processTileClick(entry);
             });
 
         }
 
     }
+
 
 
     public void setDarkMode(){

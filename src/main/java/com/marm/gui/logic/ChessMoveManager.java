@@ -16,7 +16,9 @@
 package com.marm.gui.logic;
 
 import com.marm.chessengine.board.Board;
+import com.marm.chessengine.board.Move;
 import com.marm.chessengine.board.MutableCoordinate;
+import com.marm.chessengine.player.MoveTransition;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 
@@ -26,6 +28,8 @@ public class ChessMoveManager {
 
     private  Board board;
 
+    private final GridPane gridPane;
+
     private  CreateChessMove createChessMove;
 
     private TileState tileState;
@@ -33,16 +37,20 @@ public class ChessMoveManager {
     private Map<MutableCoordinate, StackPane> gridMapCordToPane;
 
     public ChessMoveManager(Board board,
-                            Map<MutableCoordinate, StackPane> gridMapCordToPane){
+                            Map<MutableCoordinate, StackPane> gridMapCordToPane,
+                            GridPane gridPane){
 
         this.board = board;
         this.gridMapCordToPane = gridMapCordToPane;
+        this.gridPane= gridPane;
         this.tileState= TileState.NOT_ON_SOURCE_TILE;
     }
 
     public void setBoard(Board board){
         this.board = board;
     }
+
+
 
     public void processTileClick(Map.Entry<MutableCoordinate, StackPane> entry) {
         MutableCoordinate currentEntryOnEngine =  new MutableCoordinate(entry.getKey().getX(), entry.getKey().getY());
@@ -59,6 +67,7 @@ public class ChessMoveManager {
             // On source tile clicked empty source tile possible destination
         }else if (tileState == TileState.ON_SOURCE_TILE  && !board.getTile(currentEntryOnEngine).isTileOccupied() ){
             this.board = createChessMove.createMove(currentEntryOnEngine);
+            this.gridMapCordToPane = ChessBoardInitializer.drawBoard(gridPane, this.board);
             tileState = TileState.NOT_ON_SOURCE_TILE;
         }
     }
@@ -70,6 +79,9 @@ public class ChessMoveManager {
     public Board getBoard(){
         return this.board;
     }
+
+
+
 
 
 

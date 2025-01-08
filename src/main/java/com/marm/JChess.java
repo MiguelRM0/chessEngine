@@ -16,8 +16,10 @@
 package com.marm;
 
 import com.marm.chessengine.board.Board;
+import com.marm.chessengine.board.Move;
 import com.marm.chessengine.board.MutableCoordinate;
 import com.marm.chessengine.board.Tile;
+import com.marm.chessengine.player.MoveTransition;
 
 import java.io.IOException;
 
@@ -25,7 +27,13 @@ public class JChess {
 
     public static void main(String[] args) throws IOException {
         Board board = Board.createStandardBoard();
+        System.out.println(board.currentPlayer());
+        final Move move = Move.MoveFactory.createMove(board, new MutableCoordinate(6,4), new MutableCoordinate(5,4));
+        MoveTransition moveTransition = board.currentPlayer().makeMove(move);
+        board = moveTransition.getTransitionBoard();
+        board.currentPlayer().makeMove(move);
         System.out.println(board);
+        System.out.println(board.currentPlayer());
 
     }
 }
