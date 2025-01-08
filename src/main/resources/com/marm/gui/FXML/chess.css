@@ -34,8 +34,6 @@
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.8), 10, 0.5, 0, 0); /* Subtle shadow with slight opacity */
     -fx-padding: 5px;
     -fx-transition: all 0.3s ease-in-out;
-    fx-background-image: radial-gradient(center 50% 50%, radius 10%, rgba(255, 255, 255, 0.8), transparent);
-    -fx-background-repeat: no-repeat;
 }
 
 #high-lighted-tile:hover {

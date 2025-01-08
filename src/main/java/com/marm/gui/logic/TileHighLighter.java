@@ -45,10 +45,8 @@ public class TileHighLighter {
 
         List<Move> pieceLegalMoves = this.piece.calculateLegalMoves(this.board);
         for (Move pieceLegalMove: pieceLegalMoves){
-            MutableCoordinate reverseCord = new MutableCoordinate(pieceLegalMove.getDestinationCoordinate().getY(), pieceLegalMove.getDestinationCoordinate().getX());
-            destinationLegalMoves.add(coordinateStackPaneMap.get(reverseCord));
+            destinationLegalMoves.add(coordinateStackPaneMap.get(pieceLegalMove.getDestinationCoordinate()));
         }
-
         return destinationLegalMoves;
 
     }

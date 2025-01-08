@@ -23,19 +23,19 @@ import java.util.Map;
 
 public class CreateChessMove {
 
-    private Map<MutableCoordinate, StackPane> gridMapCordToPane;
+    private final Map<MutableCoordinate, StackPane> gridMapCordToPane;
 
-    private  Board board;
+    private final Board board;
 
     private final Piece movedPiece;
 
 
 
-    TileHighLighter tileHighLighter;
+    private final TileHighLighter tileHighLighter;
 
-    List<StackPane> destinationStackPanes;
+    private final List<StackPane> destinationStackPanes;
 
-    MutableCoordinate destinationCoordinates;
+    private  MutableCoordinate destinationCoordinates;
 
 
     public CreateChessMove(Board board, Piece piece, Map<MutableCoordinate, StackPane> gridMapCordToPane){
@@ -52,12 +52,14 @@ public class CreateChessMove {
         createMove();
     }
 
-    public void createMove(){
+    public Board createMove(){
         final Move move = Move.MoveFactory.createMove(board, movedPiece.getPieceCoordinatePair(), destinationCoordinates);
         final MoveTransition transition = board.currentPlayer().makeMove(move);
         if(transition.getMoveStatus().isDone()){
-            board = transition.getTransitionBoard();
+//            board = transition.getTransitionBoard();
+            return transition.getTransitionBoard();
         }
+        return board;
     }
 
     public TileHighLighter getTileHighLighter(){

@@ -22,32 +22,34 @@ import java.util.*;
 
 public class ChessBoardInitializer {
 
-    private Map<MutableCoordinate,StackPane> gridMapCordToPane;
+    private final  Map<MutableCoordinate,StackPane> gridMapCordToPane;
 
-    private Board board;
+    private final Board board;
 
 
     public ChessBoardInitializer() {
         gridMapCordToPane = new HashMap<>();
+        board = Board.createStandardBoard();
     }
     
 
     public  void initializeChessBoard(GridPane chessBoardGrid) {
-        board = Board.createStandardBoard();
 
         for (int i = 0; i < BoardUtils.NUM_TILES_PER_ROW; i++) {
             for (int j = 0; j < BoardUtils.NUM_TILES_PER_ROW; j++) {
                 MutableCoordinate currentCoordinate = new MutableCoordinate(i, j);
-
+//                StackPane stackPane = new StackPane();
                 ImageView imageView = getBoardImage(currentCoordinate);
-                StackPane stackPane = tileColorSetUp( currentCoordinate);
-                stackPane.getChildren().add(imageView);
+//                StackPane stackPane = tileColorSetUp( currentCoordinate);
+                 StackPane stackPane = tileColorSetUp(currentCoordinate);
+                 stackPane.getChildren().add(imageView);
+
+//                assignTileColor(chessBoardGrid, stackPane, currentCoordinate);
 
 
-                MutableCoordinate gridSetUpCord = new MutableCoordinate(currentCoordinate.getY(), currentCoordinate.getX());
-                gridMapCordToPane.put(gridSetUpCord, stackPane);
-
-                chessBoardGrid.add(stackPane, gridSetUpCord.getX(),gridSetUpCord.getY());
+//                MutableCoordinate gridSetUpCord = new MutableCoordinate(currentCoordinate.getY(), currentCoordinate.getX());
+                gridMapCordToPane.put(currentCoordinate, stackPane);
+                chessBoardGrid.add(stackPane, currentCoordinate.getY(),currentCoordinate.getX());
             }
         }
     }
@@ -76,6 +78,12 @@ public class ChessBoardInitializer {
         }
         return imageView;
     }
+
+//    private void assignTileColor(GridPane chessBoardGrid, StackPane stackPane, MutableCoordinate currentCoordinate){
+//        String tileClass = ((currentCoordinate.getX() + currentCoordinate.getY()) %2 == 0){
+//            stackPane
+//        }
+//    }
 
     private static StackPane tileColorSetUp( MutableCoordinate currentCoordinate) {
         StackPane stackPane = new StackPane();
