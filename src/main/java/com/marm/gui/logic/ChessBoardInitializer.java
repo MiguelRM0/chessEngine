@@ -39,7 +39,6 @@ public class ChessBoardInitializer {
 
     public  void initializeChessBoard(GridPane chessBoardGrid) {
         board = Board.createStandardBoard();
-        System.out.println(board);
 
         for (int i = 0; i < BoardUtils.NUM_TILES_PER_ROW; i++) {
             for (int j = 0; j < BoardUtils.NUM_TILES_PER_ROW; j++) {
@@ -58,7 +57,7 @@ public class ChessBoardInitializer {
         }
     }
 
-    public Map<MutableCoordinate, StackPane> getGridMapCoordToPane(){
+    public Map<MutableCoordinate, StackPane> getGridMapCordToPane(){
         return this.gridMapCordToPane;
     }
 

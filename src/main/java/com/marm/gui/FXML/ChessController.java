@@ -15,9 +15,7 @@
  * **************************************** */
 package com.marm.gui.FXML;
 
-import com.marm.chessengine.board.Move;
 import com.marm.chessengine.board.MutableCoordinate;
-import com.marm.chessengine.board.Tile;
 import com.marm.gui.logic.ChessBoardInitializer;
 import com.marm.gui.logic.TileHighLighter;
 import javafx.fxml.FXML;
@@ -45,12 +43,6 @@ public class ChessController {
     @FXML
     public void initialize(){
         setChessBoardGrid();
-//        darkMode = new MenuItem("ToggleDarkMode");
-        backGroundAnchorPane.getStyleClass().add("dark-mode");
-//        mainBorderPane.getStyleClass().add("dark-mode");
-        mainBorderPane.getStyleClass().add("customBorderPane");
-        tileHighLighter = new TileHighLighter(chessBoardInitializer.getBoard(), chessBoardInitializer.getGridMapCoordToPane(), null);
-//        tileHighLighter = new TileHighLighter(chessBoardInitializer.getBoard(), chessBoardInitializer.getGridMapCoordToPane());
         setClickOnStackPane();
 
     }
@@ -61,11 +53,14 @@ public class ChessController {
     }
 
     public void setClickOnStackPane(){
-        for (Map.Entry<MutableCoordinate,  StackPane> entry : chessBoardInitializer.getGridMapCoordToPane().entrySet()){
+        for (Map.Entry<MutableCoordinate,  StackPane> entry : chessBoardInitializer.getGridMapCordToPane().entrySet()){
             entry.getValue().setOnMouseClicked(mouseEvent -> {
-//                tileHighLighter.highLightDestinationTiles(entry);
-//                tileHighLighter.turnEmAllRed();
-                tileHighLighter.setPiece(chessBoardInitializer.getBoard().getTile(new MutableCoordinate(entry.getKey().getY(), entry.getKey().getX())).getPiece());
+                if (chessBoardInitializer.getBoard().getTile(new MutableCoordinate(entry.getKey().getY(), entry.getKey().getX())).getPiece() != null){
+                    if (tileHighLighter != null){
+                        tileHighLighter.removeHighLightTiles();
+                    }
+                    tileHighLighter = new TileHighLighter(chessBoardInitializer.getBoard(), chessBoardInitializer.getGridMapCordToPane(),chessBoardInitializer.getBoard().getTile(new MutableCoordinate(entry.getKey().getY(), entry.getKey().getX())).getPiece());
+                }
             });
 
         }

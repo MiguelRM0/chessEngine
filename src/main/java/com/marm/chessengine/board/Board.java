@@ -85,6 +85,13 @@ public class Board {
         return this.blackPlayer;
     }
 
+
+    public static Board createEmptyBoard() {
+        final Builder builder = new Builder();
+        builder.createEmptyBoard();
+//        builder.setMoveMaker(Alliance.WHITE); // Default move maker
+        return builder.build();
+    }
     @Override
     public String toString(){
         final StringBuilder builder = new StringBuilder();
@@ -154,6 +161,7 @@ public class Board {
         return builder.build();
     }
 
+
     public Tile getTile(MutableCoordinate coordinatePair){
         return gameBoard.get(coordinatePair);
     }
@@ -190,6 +198,11 @@ public class Board {
             return this;
         }
 
+        public Builder createEmptyBoard() {
+            this.boardConfig.clear(); // Ensure no pieces on the board
+            return this;
+        }
+
 
         public Board build(){
             return new Board(this);
@@ -201,9 +214,8 @@ public class Board {
     }
 
     public static void main(String[] args) {
-//        int[] test = new int[5]
-        Board testBoard = new Board.Builder().build();
-        System.out.println(testBoard);
+//        Board board = Board.createEmptyBoard();
+//        System.out.println(board);
     }
 
 }
