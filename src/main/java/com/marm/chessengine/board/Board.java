@@ -92,6 +92,15 @@ public class Board {
 //        builder.setMoveMaker(Alliance.WHITE); // Default move maker
         return builder.build();
     }
+
+    public void diffBetweenObjects(Board board){
+        List<MutableCoordinate> mismatchedCords= this.gameBoard.entrySet().stream()
+                .filter(entry -> !board.gameBoard.get(entry.getKey()).equals(entry.getValue()))
+                .map(Map.Entry::getKey).toList();
+
+        System.out.println(mismatchedCords);
+    }
+
     @Override
     public String toString(){
         final StringBuilder builder = new StringBuilder();

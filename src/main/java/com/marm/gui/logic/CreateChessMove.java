@@ -17,7 +17,6 @@ import com.marm.chessengine.pieces.Piece;
 import com.marm.chessengine.player.MoveTransition;
 import javafx.scene.layout.StackPane;
 
-import java.util.List;
 import java.util.Map;
 
 
@@ -34,12 +33,16 @@ public class CreateChessMove {
 
 
 
-    public CreateChessMove(Board board, Piece piece, Map<MutableCoordinate, StackPane> gridMapCordToPane){
+
+    public CreateChessMove(Board board, Piece piece, Map<MutableCoordinate, StackPane> gridMapCordToPane ){
         this.board = board;
         this.movedPiece = piece;
         tileHighLighter = new TileHighLighter(this.board, gridMapCordToPane, this.movedPiece);
 
+    }
 
+    public Piece getMovedPiece(){
+        return this.movedPiece;
     }
 
 
@@ -49,7 +52,9 @@ public class CreateChessMove {
         // If valid move do move and return new chessBoard
         if(transition.getMoveStatus().isDone()){
             //TODO add the move that was made to the move log
+
             return transition.getTransitionBoard();
+
 
         }
         // Else not valid move keep chess board

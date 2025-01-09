@@ -17,6 +17,8 @@ package com.marm.gui.logic;
 
 import com.marm.chessengine.board.Board;
 import com.marm.chessengine.board.MutableCoordinate;
+import com.marm.chessengine.pieces.Piece;
+import com.marm.gui.FXML.ChessController;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 
@@ -32,16 +34,24 @@ public class ChessMoveManager {
 
     private TileClickState tileClickState;
 
-    private Map<MutableCoordinate, StackPane> gridMapCordToPane;
+    private final Map<MutableCoordinate, StackPane> gridMapCordToPane;
+
+
+    private final BoardProperty boardProperty;
 
     public ChessMoveManager(Board board,
                             Map<MutableCoordinate, StackPane> gridMapCordToPane,
-                            GridPane gridPane){
+                            GridPane gridPane,
+                            Map<MutableCoordinate, BoardProperty> propertyMap,
+                            BoardProperty boardProperty){
 
         this.board = board;
         this.gridMapCordToPane = gridMapCordToPane;
         this.gridPane= gridPane;
         this.tileClickState = TileClickState.NOT_ON_SOURCE_TILE;
+        this.boardProperty = boardProperty;
+
+
     }
 
     public void setBoard(Board board){
@@ -50,7 +60,7 @@ public class ChessMoveManager {
 
 
 
-    public void processTileClick(Map.Entry<MutableCoordinate, StackPane> entry) {
+    public void processTileClick(Map.Entry<MutableCoordinate, StackPane> entry, ChessController chessController) {
         MutableCoordinate currentEntryOnEngine =  new MutableCoordinate(entry.getKey().getX(), entry.getKey().getY());
         if(createChessMove != null){
             createChessMove.getTileHighLighter().removeHighLightTiles();
@@ -64,15 +74,18 @@ public class ChessMoveManager {
             createChessMove = new CreateChessMove(board,board.getTile(currentEntryOnEngine).getPiece(), gridMapCordToPane);
             // On source tile clicked empty source tile possible destination
         }else if (tileClickState == TileClickState.ON_SOURCE_TILE  && !board.getTile(currentEntryOnEngine).isTileOccupied() ){
-            this.board = createChessMove.createMove(currentEntryOnEngine);
-//            ChessBoardInitializer.drawBoard(this.gridPane, this.board);
+
+            Board board = createChessMove.createMove(currentEntryOnEngine);
+            this.board = board;
+//            boardProperty.setPiece(board);
+            chessController.updateTileDisplay(entry.getValue(),this.board.getTile(currentEntryOnEngine).getPiece());
+            Piece sourcePiece = createChessMove.getMovedPiece();
+//            chessController.updateTileDisplay(gridMapCordToPane.get(sourcePiece), sourcePiece);
             tileClickState = TileClickState.NOT_ON_SOURCE_TILE;
         }
     }
 
-    public void setGridMapCordToPane(Map<MutableCoordinate , StackPane> gridMapCordToPane){
-        this.gridMapCordToPane = gridMapCordToPane;
-    }
+
 
     public Map<MutableCoordinate, StackPane> getGridMapCordToPane(){
         return this.gridMapCordToPane;
@@ -83,11 +96,16 @@ public class ChessMoveManager {
     }
 
 
+    public void bindTilesToBoard(ChessController chessController) {
+        boardProperty.getBoardProperty().addListener(((observableValue, board1, t1) -> {
+        System.out.println(board1);
+        System.out.println(t1);
+        }));
+    }
 
-
-
-
-
-
+    public static void main(String[] args) {
+        Board board = Board.createStandardBoard();
+//        ChessMoveManager moveManager = new ChessMoveManager(board, nu)
+    }
 
 }

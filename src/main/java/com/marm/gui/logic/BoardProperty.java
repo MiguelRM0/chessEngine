@@ -15,27 +15,27 @@
  * **************************************** */
 package com.marm.gui.logic;
 
-import com.marm.chessengine.pieces.Piece;
+import com.marm.chessengine.board.Board;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 
-public class TileProperty {
-    private final ObjectProperty<Piece> pieceProperty;
+public class BoardProperty {
+    private final ObjectProperty<Board> boardObjectProperty;
 
-    TileProperty() {
-        this.pieceProperty = new SimpleObjectProperty<Piece>(null);
+    BoardProperty() {
+        this.boardObjectProperty = new SimpleObjectProperty<>(null);
     }
 
-    public ObjectProperty<Piece> getPieceProperty(){
-        return this.pieceProperty;
+    public ObjectProperty<Board> getBoardProperty(){
+        return this.boardObjectProperty;
     }
 
-    public void setPiece(Piece pieceProperty){
-        this.pieceProperty.set(pieceProperty);
+    public void setPiece(Board pieceProperty){
+        this.boardObjectProperty.set(pieceProperty);
     }
 
-    public Piece getPiece(){
-        return this.pieceProperty.get();
+    public Board getPiece(){
+        return this.boardObjectProperty.get();
     }
 
 }
