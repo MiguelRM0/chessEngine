@@ -206,4 +206,10 @@ public abstract class Piece{
         public abstract boolean isKing();
 
     }
+
+
+    public static void main(String[] args) {
+        Piece piece  = new Rook(5,5,Alliance.WHITE);
+        System.out.println(piece.equals(new Pawn(5,5,Alliance.WHITE)));
+    }
 }

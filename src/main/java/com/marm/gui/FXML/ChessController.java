@@ -19,6 +19,7 @@ import com.marm.chessengine.Alliance;
 import com.marm.chessengine.board.Board;
 import com.marm.chessengine.board.Move;
 import com.marm.chessengine.board.MutableCoordinate;
+import com.marm.chessengine.board.Tile;
 import com.marm.chessengine.pieces.Piece;
 import com.marm.chessengine.pieces.Rook;
 import com.marm.chessengine.player.MoveTransition;
@@ -33,19 +34,21 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 
+import java.util.List;
 import java.util.Map;
 
 public class ChessController {
     public BorderPane mainBorderPane;
     public GridPane chessBoardGrid;
 
-    public ChessBoardInitializer chessBoardInitializer;
+
     public AnchorPane backGroundAnchorPane;
     public Menu menuFile;
 
     public MenuItem darkMode;
 
     public ChessMoveManager chessMoveManager;
+    public ChessBoardInitializer chessBoardInitializer;
 
 
 
@@ -53,40 +56,50 @@ public class ChessController {
     public void initialize(){
         setChessBoardGrid();
         setClickOnStackPane();
-        chessMoveManager.bindTilesToBoard(this);
+        bindTilesToBoard();
 //        test();
 
     }
+
+    public void bindTilesToBoard() {
+        chessMoveManager.getBoardProperty().getBoardProperty().addListener(((observableValue, board1, t1) -> {
+            Map<MutableCoordinate, Tile> map = board1.diffBetweenBoards(t1);
+            System.out.println(map);
+            for (Map.Entry<MutableCoordinate, Tile> entry: map.entrySet()){
+                if (entry.getValue().isTileOccupied()){
+                    updateTileDisplay(chessMoveManager.getGridMapCordToPane().get(entry.getKey()) , entry.getValue().getPiece().getImage());
+                }else{
+                    updateTileDisplay(chessMoveManager.getGridMapCordToPane().get(entry.getKey()),null );
+                }
+            }
+        }));
+    }
+
+
     @FXML
     public void setChessBoardGrid(){
         chessBoardInitializer = new ChessBoardInitializer();
         chessBoardInitializer.initializeChessBoard(chessBoardGrid);
-        chessMoveManager = new ChessMoveManager(chessBoardInitializer.getBoard(),chessBoardInitializer.getGridMapCordToPane(),chessBoardGrid, chessBoardInitializer.getPropertyMap(), chessBoardInitializer.getBoardProperty());
+        chessMoveManager = new ChessMoveManager(chessBoardInitializer.getBoard(),chessBoardInitializer.getGridMapCordToPane(), chessBoardInitializer.getPropertyMap(), chessBoardInitializer.getBoardProperty());
 
     }
     @FXML
     public void test(){
-      Board board = Board.createStandardBoard();
-      final Move move = Move.MoveFactory.createMove(board, new MutableCoordinate(6,5),new MutableCoordinate(5,5));
-      final MoveTransition moveTransition = board.currentPlayer().makeMove(move);
-      board = moveTransition.getTransitionBoard();
-//
-
-      chessBoardInitializer.getBoardProperty().setPiece(board);
+        Board board = Board.createStandardBoard();
+        Move move = Move.MoveFactory.createMove(board,new MutableCoordinate(6,0), new MutableCoordinate(4,0));
+        MoveTransition moveTransition = board.currentPlayer().makeMove(move);
+        board = moveTransition.getTransitionBoard();
+        System.out.println(chessMoveManager.getBoard().diffBetweenBoards(board));
     }
 
     //TODO Work on removing Old tile once new tile gets updated, maybe try a different approach of binding
 
     @FXML
-    public void updateTileDisplay(StackPane stackpane, Piece piece){
+    public void updateTileDisplay(StackPane stackpane, Image img){
+
         if (stackpane.getChildren().get(0) != null) {
             ImageView imageView = (ImageView) stackpane.getChildren().get(0);
-
-            if (piece != null) {
-                imageView.setImage(piece.getImage());
-            } else {
-                imageView.setImage(null);
-            }
+            imageView.setImage(img);
         }
     }
 
@@ -94,11 +107,8 @@ public class ChessController {
     public void setClickOnStackPane(){
         for (Map.Entry<MutableCoordinate,  StackPane> entry : chessMoveManager.getGridMapCordToPane().entrySet()){
             entry.getValue().setOnMouseClicked(mouseEvent -> {
-                Platform.runLater(() -> {
-                    chessMoveManager.processTileClick(entry, this);
-                    // Reapply click handlers after updating the grid map
-                    setClickOnStackPane();
-                });
+                chessMoveManager.processTileClick(entry);
+                    // Reapply click handlers after updating the grid ma
             });
 
         }

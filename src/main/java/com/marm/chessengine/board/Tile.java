@@ -2,6 +2,8 @@
 package com.marm.chessengine.board;
 
 
+import com.marm.chessengine.Alliance;
+import com.marm.chessengine.pieces.Pawn;
 import com.marm.chessengine.pieces.Piece;
 
 import java.util.*;
@@ -78,6 +80,17 @@ public abstract class Tile {
         public String toString(){
             return "-";
         }
+        @Override
+        public boolean equals(Object object){
+            if (object == this) return true;
+            if (!(object instanceof EmptyTile)) return false;
+            EmptyTile other = (EmptyTile) object;
+            return this.tileCoordinatePair.equals(other.tileCoordinatePair);
+        }
+
+        public int hashCode(){
+            return tileCoordinatePair.hashCode();
+        }
     }
 
 
@@ -101,12 +114,32 @@ public abstract class Tile {
         public String toString(){
             return this.pieceOnTile.toString();
         }
+
+        @Override
+        public boolean equals(Object object){
+            if (object == this) return true;
+            if (!(object instanceof OccupiedTile)) return false;
+            OccupiedTile other = (OccupiedTile) object;
+            return this.tileCoordinatePair .equals(other.tileCoordinatePair)  &&
+                    this.pieceOnTile.equals(other.getPiece());
+        }
+
+        public int hashCode(){
+            int result = 31  +tileCoordinatePair.hashCode();
+            result = 31 * result + getPiece().hashCode();
+            return result;
+        }
+
+
     }
 
 public static void main(String[] args) {
 
     Tile emptyTile = new EmptyTile(5,3);
-    System.out.println(emptyTile.emptyTileCoordinateMap());
+    Tile occupiedTile = new OccupiedTile(5,3, new Pawn(5,3, Alliance.WHITE));
+    System.out.println(occupiedTile.equals(new OccupiedTile(5,3, new Pawn(5,3, Alliance.WHITE))));
+    System.out.println(emptyTile.equals(new EmptyTile(5,3)));
+    System.out.println(emptyTile.equals(occupiedTile));
 
     }
 }

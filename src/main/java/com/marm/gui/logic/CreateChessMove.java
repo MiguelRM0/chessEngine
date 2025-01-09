@@ -41,10 +41,6 @@ public class CreateChessMove {
 
     }
 
-    public Piece getMovedPiece(){
-        return this.movedPiece;
-    }
-
 
     public Board createMove(MutableCoordinate destinationCoordinate){
         final Move move = Move.MoveFactory.createMove(board, movedPiece.getPieceCoordinatePair(), destinationCoordinate);
@@ -52,13 +48,10 @@ public class CreateChessMove {
         // If valid move do move and return new chessBoard
         if(transition.getMoveStatus().isDone()){
             //TODO add the move that was made to the move log
-
             return transition.getTransitionBoard();
-
-
         }
-        // Else not valid move keep chess board
-        return board;
+        return this.board;
+
     }
 
     public TileHighLighter getTileHighLighter(){

@@ -93,12 +93,17 @@ public class Board {
         return builder.build();
     }
 
-    public void diffBetweenObjects(Board board){
-        List<MutableCoordinate> mismatchedCords= this.gameBoard.entrySet().stream()
-                .filter(entry -> !board.gameBoard.get(entry.getKey()).equals(entry.getValue()))
-                .map(Map.Entry::getKey).toList();
+    public Map<MutableCoordinate, Tile> diffBetweenBoards(Board board){
+        Map<MutableCoordinate, Tile> coordinates = new HashMap<>();
+        for (Map.Entry<MutableCoordinate, Tile> entry : this.gameBoard.entrySet()) {
+            Tile thisTileValue = entry.getValue();
+            Tile thatTileValue = board.getTile(entry.getKey());
+            if (!thisTileValue.equals(thatTileValue)) {
+                coordinates.put(entry.getKey(), board.getTile(entry.getKey()));
+            }
+        }
+        return coordinates;
 
-        System.out.println(mismatchedCords);
     }
 
     @Override

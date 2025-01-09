@@ -28,8 +28,6 @@ public class ChessMoveManager {
 
     private  Board board;
 
-    private final GridPane gridPane;
-
     private  CreateChessMove createChessMove;
 
     private TileClickState tileClickState;
@@ -41,13 +39,11 @@ public class ChessMoveManager {
 
     public ChessMoveManager(Board board,
                             Map<MutableCoordinate, StackPane> gridMapCordToPane,
-                            GridPane gridPane,
                             Map<MutableCoordinate, BoardProperty> propertyMap,
                             BoardProperty boardProperty){
 
         this.board = board;
         this.gridMapCordToPane = gridMapCordToPane;
-        this.gridPane= gridPane;
         this.tileClickState = TileClickState.NOT_ON_SOURCE_TILE;
         this.boardProperty = boardProperty;
 
@@ -60,7 +56,7 @@ public class ChessMoveManager {
 
 
 
-    public void processTileClick(Map.Entry<MutableCoordinate, StackPane> entry, ChessController chessController) {
+    public void processTileClick(Map.Entry<MutableCoordinate, StackPane> entry) {
         MutableCoordinate currentEntryOnEngine =  new MutableCoordinate(entry.getKey().getX(), entry.getKey().getY());
         if(createChessMove != null){
             createChessMove.getTileHighLighter().removeHighLightTiles();
@@ -74,15 +70,15 @@ public class ChessMoveManager {
             createChessMove = new CreateChessMove(board,board.getTile(currentEntryOnEngine).getPiece(), gridMapCordToPane);
             // On source tile clicked empty source tile possible destination
         }else if (tileClickState == TileClickState.ON_SOURCE_TILE  && !board.getTile(currentEntryOnEngine).isTileOccupied() ){
-
             Board board = createChessMove.createMove(currentEntryOnEngine);
             this.board = board;
-//            boardProperty.setPiece(board);
-            chessController.updateTileDisplay(entry.getValue(),this.board.getTile(currentEntryOnEngine).getPiece());
-            Piece sourcePiece = createChessMove.getMovedPiece();
-//            chessController.updateTileDisplay(gridMapCordToPane.get(sourcePiece), sourcePiece);
+            boardProperty.setPiece(board);
             tileClickState = TileClickState.NOT_ON_SOURCE_TILE;
         }
+    }
+
+    public BoardProperty getBoardProperty(){
+        return this.boardProperty;
     }
 
 
@@ -96,12 +92,7 @@ public class ChessMoveManager {
     }
 
 
-    public void bindTilesToBoard(ChessController chessController) {
-        boardProperty.getBoardProperty().addListener(((observableValue, board1, t1) -> {
-        System.out.println(board1);
-        System.out.println(t1);
-        }));
-    }
+
 
     public static void main(String[] args) {
         Board board = Board.createStandardBoard();
