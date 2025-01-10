@@ -71,7 +71,7 @@ public class ChessBoardInitializer {
 
     }
 
-    public static void flipBoard(GridPane gridPane, Board board){
+    public static GridPane flipBoard(GridPane gridPane, Board board){
         Map<MutableCoordinate, StackPane> gridMapCordToPane = new HashMap<>();
         for (int i = BoardUtils.NUM_TILES_PER_ROW -1; i >=0; i--) {
             for (int j = BoardUtils.NUM_TILES_PER_ROW -1; j>=0; j--) {
@@ -89,11 +89,11 @@ public class ChessBoardInitializer {
 
 
 
-
                 gridMapCordToPane.put(currentCoordinate, stackPane);
                 gridPane.add(stackPane,  BoardUtils.NUM_TILES_PER_ROW - currentCoordinate.getY() -1 , BoardUtils.NUM_TILES_PER_ROW-   currentCoordinate.getX() -1);
             }
         }
+        return gridPane;
 
     }
 

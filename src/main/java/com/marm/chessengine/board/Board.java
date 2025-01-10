@@ -31,9 +31,12 @@ public class Board {
     private final BlackPlayer blackPlayer;
     private final Player currentPlayer;
 
+    private final BoardDirection boardDirection;
+
 
     public Board(final Builder builder){
         this.gameBoard = createGameBoard(builder);
+        this.boardDirection = builder.boardDirection.chooseOrientation();
         this.whitePieces = calculateActivePieces(this.gameBoard, Alliance.WHITE);
         this.blackPieces = calculateActivePieces(this.gameBoard, Alliance.BLACK);
         final Collection<Move> whiteStandardLegalMoves = calculateLegalMoves(this.whitePieces);
@@ -45,10 +48,17 @@ public class Board {
         this.currentPlayer = builder.nextMoveMaker.choosePlayer(this.whitePlayer,this.blackPlayer);
 //        this.currentPlayer = null;
 
+
+
+    }
+
+    public BoardDirection getBoardDirection(){
+        return this.boardDirection;
     }
 
     private Collection<Move> calculateLegalMoves(final Collection<Piece> Pieces) {
         final List<Move> legalMoves = new ArrayList<>();
+
 
         for( final Piece piece:Pieces ){
             legalMoves.addAll(piece.calculateLegalMoves(this));
@@ -143,7 +153,6 @@ public class Board {
                 tiles.put(coordinate, Tile.createTile(i,j,builder.boardConfig.get(coordinate)));
 
             }
-
         }
         return Collections.unmodifiableMap(tiles);
 
@@ -169,8 +178,8 @@ public class Board {
             }
 
         }
-
         builder.setMoveMaker(this.currentPlayer().getAlliance());
+        builder.setBoardDirection(this.boardDirection.getOpposite());
 
         return builder.build();
     }
@@ -201,7 +210,7 @@ public class Board {
         }
 
         builder.setMoveMaker(Alliance.WHITE);
-
+        builder.setBoardDirection(BoardDirection.NORMAL);
         return builder.build();
     }
 
@@ -227,6 +236,8 @@ public class Board {
 
         Pawn enPassantPawn;
 
+        BoardDirection boardDirection;
+
         public  Builder() {
             this.boardConfig = new HashMap<>();
 
@@ -247,6 +258,11 @@ public class Board {
             return this;
         }
 
+        public Builder setBoardDirection(final BoardDirection boardDirection){
+            this.boardDirection = boardDirection;
+            return this;
+
+        }
 
         public Board build(){
             return new Board(this);
@@ -261,9 +277,15 @@ public class Board {
         Board board = Board.createStandardBoard();
         System.out.println(board);
         System.out.println(board.getAllLegalMoves().size());
+        System.out.println(board.boardDirection);
         Board rotatedBoard = board.rotateBoard();
         System.out.println(rotatedBoard);
+        System.out.println(board.getAllLegalMoves().size());
+        System.out.println(rotatedBoard.boardDirection);
+        rotatedBoard = rotatedBoard.rotateBoard();
+        System.out.println(rotatedBoard);
         System.out.println(rotatedBoard.getAllLegalMoves().size());
+        System.out.println(rotatedBoard.boardDirection);
 
 
 //        System.setOut(new java.io.PrintStream(

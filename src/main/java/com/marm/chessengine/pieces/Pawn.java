@@ -41,7 +41,7 @@ public class Pawn extends Piece{
         final List<Move> legalMoves = new ArrayList<>();
         for (final int[] currentCandidateVector: CANDIDATE_MOVE_COORDINATES){
             /*Takes into account what Alliance the piece is*/
-            MutableCoordinate candidateDestinationCoordinate = new MutableCoordinate(this.pieceXCord + (currentCandidateVector[0]  * this.getPieceAlliance().getDirection()), this.pieceYCord + (currentCandidateVector[1] * this.getPieceAlliance().getDirection()));
+            MutableCoordinate candidateDestinationCoordinate = new MutableCoordinate(this.pieceXCord + (currentCandidateVector[0]  * this.getPieceAlliance().getDirection(board.getBoardDirection())), this.pieceYCord + (currentCandidateVector[1] * this.getPieceAlliance().getDirection(board.getBoardDirection())));
             /* Move to the next iteration tile is out of board */
             if (!BoardUtils.isValidTileCoordinate(candidateDestinationCoordinate)){
                 continue;
@@ -55,7 +55,7 @@ public class Pawn extends Piece{
             }else if ((Arrays.equals(currentCandidateVector, new int[]{2,0} )  && (this.isFirstMove())) &&
                     ((BoardUtils.SECOND_ROW[this.pieceXCord][this.pieceYCord] && this.pieceAlliance.isBlack()) ||
                     (BoardUtils.SEVENTH_ROW[this.pieceXCord][this.pieceYCord] && this.pieceAlliance.isWhite())) ){
-                final MutableCoordinate behindCandidateDestinationCoordinate = new MutableCoordinate(this.pieceXCord + (this.getPieceAlliance().getDirection()), this.pieceYCord );
+                final MutableCoordinate behindCandidateDestinationCoordinate = new MutableCoordinate(this.pieceXCord + (this.getPieceAlliance().getDirection(board.getBoardDirection())), this.pieceYCord );
                 if(!board.getTile(behindCandidateDestinationCoordinate).isTileOccupied()  && !board.getTile(candidateDestinationCoordinate).isTileOccupied()){
                     legalMoves.add(new MajorMove(board,this, candidateDestinationCoordinate));
                 }

@@ -57,6 +57,8 @@ public class ChessMoveManager {
         this.gridMapCordToPane = gridMapCordToPane;
     }
 
+
+
     public void setBoard(Board board){
         this.board = board;
     }

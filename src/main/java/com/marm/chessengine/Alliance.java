@@ -1,5 +1,7 @@
 package com.marm.chessengine;
 
+import com.marm.chessengine.board.Board;
+import com.marm.chessengine.board.BoardDirection;
 import com.marm.chessengine.player.BlackPlayer;
 import com.marm.chessengine.player.Player;
 import com.marm.chessengine.player.WhitePlayer;
@@ -7,8 +9,8 @@ import com.marm.chessengine.player.WhitePlayer;
 public enum Alliance {
     WHITE {
         @Override
-        public int getDirection() {
-            return -1 ;
+        public int getDirection(BoardDirection boardDirection) {
+            return -1 * boardDirection.boardDirectionMultiplier();
         }
 
         @Override
@@ -27,6 +29,7 @@ public enum Alliance {
             return whitePlayer;
         }
 
+
         @Override
         public String toString(){
             return"W";
@@ -39,10 +42,10 @@ public enum Alliance {
         }
 
         @Override
-        public int getDirection() {
-
-            return 1;
+        public int getDirection(BoardDirection boardDirection) {
+            return boardDirection.boardDirectionMultiplier();
         }
+
 
         @Override
         public boolean isWhite() {
@@ -65,7 +68,7 @@ public enum Alliance {
 
     public abstract String toString();
 
-    public abstract int getDirection();
+    public abstract int getDirection(BoardDirection boardDirection);
 
     public abstract boolean isWhite();
 

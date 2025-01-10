@@ -16,6 +16,7 @@
 package com.marm.gui.FXML;
 
 import com.marm.chessengine.board.Board;
+import com.marm.chessengine.board.BoardUtils;
 import com.marm.chessengine.board.MutableCoordinate;
 import com.marm.chessengine.board.Tile;
 import com.marm.gui.logic.BoardProperty;
@@ -49,18 +50,7 @@ public class ChessController {
     public void initialize(){
         setChessBoardGrid();
         setClickOnStackPane();
-        bindTilesToBoard();
-//        chessMoveManager.printAllProperties();
-//        Board rotatedBoard = chessMoveManager.getBoard().rotateBoard();
-//        System.out.println(rotatedBoard);
-//        Map<MutableCoordinate,StackPane> gridMapCordToPane = ChessBoardInitializer.drawBoard(chessBoardGrid,rotatedBoard);
-//        chessMoveManager.setBoard(rotatedBoard);
-//        chessMoveManager.setGridMapCordToPane(gridMapCordToPane);
-//        chessMoveManager.getBoardProperty().setBoard(rotatedBoard);
-//        chessMoveManager.printAllProperties();
-//
-//        bindTilesToBoard();
-//        setClickOnStackPane();
+        bindTilesToBoard();;
         //TODO Create set up a board that is flipped
     }
 
@@ -94,6 +84,21 @@ public class ChessController {
         }
     }
 
+    public void test(){
+        chessMoveManager.getGridMapCordToPane();
+        for(Map.Entry<MutableCoordinate, StackPane> entry: chessMoveManager.getGridMapCordToPane().entrySet()){
+            MutableCoordinate newCoordinate  = new MutableCoordinate(BoardUtils.NUM_TILES_PER_ROW - entry.getKey().getX()-1, BoardUtils.NUM_TILES_PER_ROW-entry.getKey().getY()-1);
+            Tile tile = chessMoveManager.getBoard().getTile(newCoordinate);
+            if(tile.isTileOccupied()){
+                updateTileDisplay(entry.getValue(), tile.getPiece().getImage() );
+
+            }else{
+                updateTileDisplay(entry.getValue(), null);
+            }
+
+        }
+    }
+
 
     public void setClickOnStackPane(){
         for (Map.Entry<MutableCoordinate,  StackPane> entry : chessMoveManager.getGridMapCordToPane().entrySet()){
@@ -109,7 +114,9 @@ public class ChessController {
 
     public void setDarkMode(){
         darkMode.setOnAction(actionEvent -> {
-            ChessBoardInitializer.flipBoard(chessBoardGrid,chessMoveManager.getBoard());
+            test();
+//              ChessBoardInitializer.flipBoard(chessBoardGrid,chessMoveManager.getBoard());
+//            chessBoardGrid
 //            if (backGroundAnchorPane.getStyleClass().contains("dark-mode")){
 //                mainBorderPane.getStyleClass().remove("dark-mode");
 //                mainBorderPane.getStyleClass().add("light-mode");
