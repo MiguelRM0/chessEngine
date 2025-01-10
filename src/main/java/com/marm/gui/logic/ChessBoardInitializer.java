@@ -25,25 +25,18 @@ public class ChessBoardInitializer {
 
     private final Board board;
 
-    private final  Map<MutableCoordinate, BoardProperty> propertyMap;
-
     private final BoardProperty boardProperty;
 
 
     public ChessBoardInitializer() {
         gridMapCordToPane = new HashMap<>();
         board = Board.createStandardBoard();
-        propertyMap= new HashMap<>();
         boardProperty = new BoardProperty();
-        boardProperty.setPiece(board);
+        boardProperty.setBoard(board);
     }
 
     public BoardProperty getBoardProperty(){
         return this.boardProperty;
-    }
-
-    public Map<MutableCoordinate, BoardProperty> getPropertyMap(){
-        return this.propertyMap;
     }
     
 
@@ -53,9 +46,8 @@ public class ChessBoardInitializer {
             for (int j = 0; j < BoardUtils.NUM_TILES_PER_ROW; j++) {
 
                 MutableCoordinate currentCoordinate = new MutableCoordinate(i, j);
-                BoardProperty boardProperty = new BoardProperty();
 
-                propertyMap.put(currentCoordinate, boardProperty);
+
 
 
                 ImageView imageView = getBoardImage(currentCoordinate, this.board);
@@ -70,11 +62,63 @@ public class ChessBoardInitializer {
 
 
 
+
                 gridMapCordToPane.put(currentCoordinate, stackPane);
                 chessBoardGrid.add(stackPane,  currentCoordinate.getY(),currentCoordinate.getX());
             }
         }
 
+
+    }
+
+    public static void flipBoard(GridPane gridPane, Board board){
+        Map<MutableCoordinate, StackPane> gridMapCordToPane = new HashMap<>();
+        for (int i = BoardUtils.NUM_TILES_PER_ROW -1; i >=0; i--) {
+            for (int j = BoardUtils.NUM_TILES_PER_ROW -1; j>=0; j--) {
+
+                MutableCoordinate currentCoordinate = new MutableCoordinate(i, j);
+
+
+                ImageView imageView = getBoardImage(currentCoordinate, board);
+
+//                imageView.setId("imageView" + i + "," + j);
+                StackPane stackPane = tileColorSetUp(currentCoordinate);
+
+//                StackPane stackPane = new StackPane();
+                stackPane.getChildren().add(imageView);
+
+
+
+
+                gridMapCordToPane.put(currentCoordinate, stackPane);
+                gridPane.add(stackPane,  BoardUtils.NUM_TILES_PER_ROW - currentCoordinate.getY() -1 , BoardUtils.NUM_TILES_PER_ROW-   currentCoordinate.getX() -1);
+            }
+        }
+
+    }
+
+    public void initializeBackwards(GridPane gridPane){
+        for (int i = BoardUtils.NUM_TILES_PER_ROW -1; i >=0; i--) {
+            for (int j = BoardUtils.NUM_TILES_PER_ROW -1; j>=0; j--) {
+
+                MutableCoordinate currentCoordinate = new MutableCoordinate(i, j);
+
+
+                ImageView imageView = getBoardImage(currentCoordinate, this.board);
+
+                imageView.setId("imageView" + i + "," + j);
+                StackPane stackPane = tileColorSetUp(currentCoordinate);
+
+//                StackPane stackPane = new StackPane();
+                stackPane.getChildren().add(imageView);
+
+
+
+
+                gridMapCordToPane.put(currentCoordinate, stackPane);
+                gridPane.add(stackPane,  BoardUtils.NUM_TILES_PER_ROW- currentCoordinate.getY() -1 , BoardUtils.NUM_TILES_PER_ROW-   currentCoordinate.getX() -1);
+            }
+        }
 
     }
 
@@ -92,12 +136,16 @@ public class ChessBoardInitializer {
 
                 stackPane.getChildren().add(imageView);
                 gridMapCordToPane.put(currentCoordinate, stackPane);
-                chessBoardGrid.add(stackPane, currentCoordinate.getY(),currentCoordinate.getX());
+                chessBoardGrid.add(stackPane,  BoardUtils.NUM_TILES_PER_ROW- currentCoordinate.getX() -1 , BoardUtils.NUM_TILES_PER_ROW-   currentCoordinate.getY() -1);
 
             }
         }
 
         return gridMapCordToPane;
+
+    }
+
+    public void test(){
 
     }
 
@@ -138,6 +186,8 @@ public class ChessBoardInitializer {
 
         return stackPane;
     }
+
+
 
 
 

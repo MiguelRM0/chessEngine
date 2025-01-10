@@ -68,6 +68,11 @@ public class Knight extends Piece{
         }
         return Collections.unmodifiableList(legalMoves);
     }
+
+    @Override
+    public Knight copyAt(MutableCoordinate newMutableCoordinates) {
+        return new Knight(newMutableCoordinates.getX(), newMutableCoordinates.getY(), this.pieceAlliance);
+    }
     @Override
     public Knight movePiece(final Move move) {
         return new Knight(move.getDestinationCoordinate().getX(),move.getDestinationCoordinate().getY(),move.getMovedPiece().getPieceAlliance());

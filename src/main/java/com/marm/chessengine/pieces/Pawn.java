@@ -47,7 +47,7 @@ public class Pawn extends Piece{
                 continue;
             }
             /* Not occupied able to add to moves*/
-            System.out.print(board.getTile(candidateDestinationCoordinate));
+//            System.out.print(board.getTile(candidateDestinationCoordinate));
             if (Arrays.equals(currentCandidateVector, new int[]{1,0}) && !board.getTile(candidateDestinationCoordinate).isTileOccupied()) {
                 legalMoves.add(new MajorMove(board,this, candidateDestinationCoordinate));
                 /* Logic for pawn jump move, has to be first move and either on second row or seventh row depends on if black or white */
@@ -70,6 +70,11 @@ public class Pawn extends Piece{
 
         }
         return Collections.unmodifiableList(legalMoves);
+    }
+
+    @Override
+    public Pawn copyAt(MutableCoordinate newMutableCoordinates) {
+        return new Pawn(newMutableCoordinates.getX(), newMutableCoordinates.getY(), this.pieceAlliance);
     }
 
 

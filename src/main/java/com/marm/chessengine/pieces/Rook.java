@@ -38,6 +38,11 @@ public class Rook extends Piece{
     }
 
     @Override
+    public Piece copyAt(MutableCoordinate newMutableCoordinates) {
+        return new Rook(newMutableCoordinates.getX(), newMutableCoordinates.getY(), this.pieceAlliance);
+    }
+
+    @Override
     public Rook movePiece(final Move move) {
         return new Rook(move.getDestinationCoordinate().getX(),move.getDestinationCoordinate().getY(),move.getMovedPiece().getPieceAlliance());
     }

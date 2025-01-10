@@ -45,6 +45,11 @@ public class Queen extends Piece{
     }
 
     @Override
+    public Queen copyAt(MutableCoordinate newMutableCoordinates) {
+        return new Queen(newMutableCoordinates.getX(), newMutableCoordinates.getY(), this.pieceAlliance);
+    }
+
+    @Override
     public Image getImage() {
         if (this.pieceAlliance == Alliance.WHITE){
             return queenImgWhite;

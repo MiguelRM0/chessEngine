@@ -34,6 +34,8 @@ public abstract class Piece{
         this.cacheHashCode = computeHashCode();
     }
 
+    public abstract Piece copyAt(final MutableCoordinate newMutableCoordinates);
+
     private int computeHashCode() {
         int result = pieceType.hashCode();
         result = 31 * result + pieceAlliance.hashCode();

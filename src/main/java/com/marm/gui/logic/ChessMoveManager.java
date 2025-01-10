@@ -17,9 +17,6 @@ package com.marm.gui.logic;
 
 import com.marm.chessengine.board.Board;
 import com.marm.chessengine.board.MutableCoordinate;
-import com.marm.chessengine.pieces.Piece;
-import com.marm.gui.FXML.ChessController;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 
 import java.util.Map;
@@ -32,14 +29,13 @@ public class ChessMoveManager {
 
     private TileClickState tileClickState;
 
-    private final Map<MutableCoordinate, StackPane> gridMapCordToPane;
+    private  Map<MutableCoordinate, StackPane> gridMapCordToPane;
 
 
     private final BoardProperty boardProperty;
 
     public ChessMoveManager(Board board,
                             Map<MutableCoordinate, StackPane> gridMapCordToPane,
-                            Map<MutableCoordinate, BoardProperty> propertyMap,
                             BoardProperty boardProperty){
 
         this.board = board;
@@ -48,6 +44,17 @@ public class ChessMoveManager {
         this.boardProperty = boardProperty;
 
 
+    }
+
+    public void printAllProperties(){
+        System.out.println( "Board "  + board);
+        System.out.println("GridStackPane" + gridMapCordToPane);
+        System.out.println("Tile Click State " + tileClickState);
+        System.out.println("Board property " + boardProperty);
+    }
+
+    public void setGridMapCordToPane(Map<MutableCoordinate, StackPane> gridMapCordToPane){
+        this.gridMapCordToPane = gridMapCordToPane;
     }
 
     public void setBoard(Board board){
@@ -72,7 +79,7 @@ public class ChessMoveManager {
         }else if (tileClickState == TileClickState.ON_SOURCE_TILE  && !board.getTile(currentEntryOnEngine).isTileOccupied() ){
             Board board = createChessMove.createMove(currentEntryOnEngine);
             this.board = board;
-            boardProperty.setPiece(board);
+            boardProperty.setBoard(board);
             tileClickState = TileClickState.NOT_ON_SOURCE_TILE;
         }
     }
@@ -90,6 +97,8 @@ public class ChessMoveManager {
     public Board getBoard(){
         return this.board;
     }
+
+
 
 
 

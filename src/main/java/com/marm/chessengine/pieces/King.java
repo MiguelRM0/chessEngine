@@ -34,6 +34,11 @@ public class King extends Piece{
     }
 
     @Override
+    public King copyAt(MutableCoordinate newMutableCoordinates) {
+        return new King(newMutableCoordinates.getX(), newMutableCoordinates.getY(), this.pieceAlliance);
+    }
+
+    @Override
     public List<Move> calculateLegalMoves(Board board) {
         final List<Move> legalMoves = new ArrayList<>();
         for (int[] currentCandidateVector: CANDIDATE_MOVE_COORDINATES){

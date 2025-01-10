@@ -14,6 +14,7 @@ package com.marm.chessengine.board;
 import com.marm.chessengine.Alliance;
 import com.marm.chessengine.pieces.*;
 import com.marm.chessengine.player.BlackPlayer;
+import com.marm.chessengine.player.MoveTransition;
 import com.marm.chessengine.player.Player;
 import com.marm.chessengine.player.WhitePlayer;
 
@@ -38,8 +39,11 @@ public class Board {
         final Collection<Move> whiteStandardLegalMoves = calculateLegalMoves(this.whitePieces);
         final Collection<Move> blackStandardLegalMoves = calculateLegalMoves(this.blackPieces);
         this.whitePlayer = new WhitePlayer(this, whiteStandardLegalMoves, blackStandardLegalMoves);
+//        this.whitePlayer = null;
         this.blackPlayer = new BlackPlayer(this, whiteStandardLegalMoves, blackStandardLegalMoves);
+//        this.blackPlayer = null;
         this.currentPlayer = builder.nextMoveMaker.choosePlayer(this.whitePlayer,this.blackPlayer);
+//        this.currentPlayer = null;
 
     }
 
@@ -89,7 +93,7 @@ public class Board {
     public static Board createEmptyBoard() {
         final Builder builder = new Builder();
         builder.createEmptyBoard();
-//        builder.setMoveMaker(Alliance.WHITE); // Default move maker
+        builder.setMoveMaker(Alliance.WHITE); // Default move maker
         return builder.build();
     }
 
@@ -143,6 +147,32 @@ public class Board {
         }
         return Collections.unmodifiableMap(tiles);
 
+    }
+
+    public Board rotateBoard(){
+        Builder builder = new Builder();
+        for(int i = 0; i < BoardUtils.NUM_TILES_PER_ROW; i++){
+            for (int j = 0 ; j < BoardUtils.NUM_TILES_PER_ROW; j++){
+                MutableCoordinate currentCoordinate = new MutableCoordinate(i,j);
+                Tile currentTile = this.gameBoard.get(currentCoordinate);
+
+                int newX = BoardUtils.NUM_TILES_PER_ROW -1 - i;
+                int newY = BoardUtils.NUM_TILES_PER_ROW -1 -j;
+                MutableCoordinate newCoordinate = new MutableCoordinate(newX,newY);
+                if(currentTile.isTileOccupied()){
+                    Piece currentPiece = currentTile.getPiece();
+                    Piece rotatedPiece = currentPiece.copyAt(newCoordinate);
+
+                    builder.setPiece(rotatedPiece);
+                }
+
+            }
+
+        }
+
+        builder.setMoveMaker(this.currentPlayer().getAlliance());
+
+        return builder.build();
     }
 
     public static Board createStandardBoard(){
@@ -228,8 +258,33 @@ public class Board {
     }
 
     public static void main(String[] args) {
-//        Board board = Board.createEmptyBoard();
-//        System.out.println(board);
+        Board board = Board.createStandardBoard();
+        System.out.println(board);
+        System.out.println(board.getAllLegalMoves().size());
+        Board rotatedBoard = board.rotateBoard();
+        System.out.println(rotatedBoard);
+        System.out.println(rotatedBoard.getAllLegalMoves().size());
+
+
+//        System.setOut(new java.io.PrintStream(
+//                new java.io.FileOutputStream(java.io.FileDescriptor.out)) {
+//            @Override
+//            public void print(String s) {
+//                super.print(s);
+//                if (s.contains("RNNRBBNKKBQQKBBQNNBRRNBNQNRBRNRNNBRBKNKQBQBKP")) {
+//                    throw new RuntimeException("Found you!");
+//                }
+//            }
+//        });
+
+//        Move move = Move.MoveFactory.createMove(rotatedBoard, new MutableCoordinate(1,5), new MutableCoordinate(2,5));
+//
+//        MoveTransition moveTransition = rotatedBoard.currentPlayer.makeMove(move);
+//
+//        if(moveTransition.getMoveStatus().isDone()){
+//
+//            System.out.println(moveTransition.getTransitionBoard());
+//        }
     }
 
 }

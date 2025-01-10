@@ -70,7 +70,7 @@ public abstract class Player {
             }
         }
         throw new RuntimeException("Board Set Up is Incorrect");
-//        return null;
+//        return new King(-1,-1,Alliance.WHITE);
     }
 
 

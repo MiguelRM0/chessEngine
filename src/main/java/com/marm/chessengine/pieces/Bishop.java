@@ -32,6 +32,12 @@ public class Bishop extends Piece {
         super(pieceXCord, pieceYCord, alliance, PieceType.BISHOP);
     }
 
+
+    @Override
+    public Bishop copyAt(MutableCoordinate newMutableCoordinates) {
+        return new Bishop(newMutableCoordinates.getX(), newMutableCoordinates.getY(), this.pieceAlliance);
+    }
+
     @Override
     public List<Move> calculateLegalMoves(final Board board) {
         return this.legalMovesQRB(board, CANDIDATE_MOVE_VECTOR_COORDINATES);

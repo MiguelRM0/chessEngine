@@ -32,6 +32,19 @@ public abstract class Tile {
 
     private String emptyTileCoordinateMap(){
         StringBuilder result = new StringBuilder();
+        for ( int i = BoardUtils.NUM_TILES_PER_ROW -1; i >= 0; i--){
+            for (int j = BoardUtils.NUM_TILES_PER_ROW -1; j >=0; j--){
+                result.append(new MutableCoordinate(i,j));
+            }
+            result.append("\n");
+
+        }
+        return result.toString();
+    }
+
+
+    private String emptyTileCoordinateMapStraight(){
+        StringBuilder result = new StringBuilder();
         for ( int i = 0; i < BoardUtils.NUM_TILES_PER_ROW; i++){
             for (int j = 0; j < BoardUtils.NUM_TILES_PER_ROW; j++){
                 result.append(new MutableCoordinate(i,j));
@@ -133,13 +146,18 @@ public abstract class Tile {
 
     }
 
-public static void main(String[] args) {
+    public static void main(String[] args) {
+        Tile tile = new EmptyTile(5,5);
+//    System.out.println(tile.emptyTileCoordinateMap());
+//    System.out.println(tile.emptyTileCoordinateMapStraight());
+        Map<MutableCoordinate , Tile> newTile = new HashMap<>();
+//        for (Map.Entry<MutableCoordinate,EmptyTile> entry: tile.getEmptyTileMap().entrySet()){
+//            newTile.put(new MutableCoordinate(  8 - entry.getValue().xCord - 1, 8-entry.getValue().yCord), entry.getValue());
+//        }
 
-    Tile emptyTile = new EmptyTile(5,3);
-    Tile occupiedTile = new OccupiedTile(5,3, new Pawn(5,3, Alliance.WHITE));
-    System.out.println(occupiedTile.equals(new OccupiedTile(5,3, new Pawn(5,3, Alliance.WHITE))));
-    System.out.println(emptyTile.equals(new EmptyTile(5,3)));
-    System.out.println(emptyTile.equals(occupiedTile));
+
+
+
 
     }
 }

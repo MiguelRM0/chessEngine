@@ -22,7 +22,7 @@ import javafx.beans.property.SimpleObjectProperty;
 public class BoardProperty {
     private final ObjectProperty<Board> boardObjectProperty;
 
-    BoardProperty() {
+    public BoardProperty() {
         this.boardObjectProperty = new SimpleObjectProperty<>(null);
     }
 
@@ -30,11 +30,11 @@ public class BoardProperty {
         return this.boardObjectProperty;
     }
 
-    public void setPiece(Board pieceProperty){
-        this.boardObjectProperty.set(pieceProperty);
+    public void setBoard(Board board){
+        this.boardObjectProperty.set(board);
     }
 
-    public Board getPiece(){
+    public Board getBoard(){
         return this.boardObjectProperty.get();
     }
 
