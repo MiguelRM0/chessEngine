@@ -18,11 +18,6 @@ public enum BoardDirection {
         }
 
         @Override
-        public BoardDirection chooseOrientation() {
-            return NORMAL;
-        }
-
-        @Override
         public BoardDirection getOpposite() {
             return ROTATED;
         }
@@ -45,10 +40,6 @@ public enum BoardDirection {
             return -1;
         }
 
-        @Override
-        public BoardDirection chooseOrientation() {
-            return ROTATED;
-        }
 
         @Override
         public BoardDirection getOpposite() {
@@ -62,6 +53,5 @@ public enum BoardDirection {
 
     public abstract int boardDirectionMultiplier();
 
-    public abstract BoardDirection chooseOrientation();
     public abstract BoardDirection getOpposite();
 }

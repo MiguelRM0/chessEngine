@@ -52,9 +52,7 @@ public class Pawn extends Piece{
                 legalMoves.add(new MajorMove(board,this, candidateDestinationCoordinate));
                 /* Logic for pawn jump move, has to be first move and either on second row or seventh row depends on if black or white */
 
-            }else if ((Arrays.equals(currentCandidateVector, new int[]{2,0} )  && (this.isFirstMove())) &&
-                    ((BoardUtils.SECOND_ROW[this.pieceXCord][this.pieceYCord] && this.pieceAlliance.isBlack()) ||
-                    (BoardUtils.SEVENTH_ROW[this.pieceXCord][this.pieceYCord] && this.pieceAlliance.isWhite())) ){
+            }else if ((Arrays.equals(currentCandidateVector, new int[]{2,0} )  && (this.isFirstMove())) ){
                 final MutableCoordinate behindCandidateDestinationCoordinate = new MutableCoordinate(this.pieceXCord + (this.getPieceAlliance().getDirection(board.getBoardDirection())), this.pieceYCord );
                 if(!board.getTile(behindCandidateDestinationCoordinate).isTileOccupied()  && !board.getTile(candidateDestinationCoordinate).isTileOccupied()){
                     legalMoves.add(new MajorMove(board,this, candidateDestinationCoordinate));

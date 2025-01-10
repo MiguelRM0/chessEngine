@@ -36,7 +36,7 @@ public class Board {
 
     public Board(final Builder builder){
         this.gameBoard = createGameBoard(builder);
-        this.boardDirection = builder.boardDirection.chooseOrientation();
+        this.boardDirection= builder.boardDirection;
         this.whitePieces = calculateActivePieces(this.gameBoard, Alliance.WHITE);
         this.blackPieces = calculateActivePieces(this.gameBoard, Alliance.BLACK);
         final Collection<Move> whiteStandardLegalMoves = calculateLegalMoves(this.whitePieces);
@@ -240,6 +240,7 @@ public class Board {
 
         public  Builder() {
             this.boardConfig = new HashMap<>();
+            this.setBoardDirection(BoardDirection.NORMAL);
 
         }
 
@@ -275,38 +276,37 @@ public class Board {
 
     public static void main(String[] args) {
         Board board = Board.createStandardBoard();
-        System.out.println(board);
-        System.out.println(board.getAllLegalMoves().size());
-        System.out.println(board.boardDirection);
+        System.out.println(board.currentPlayer.getLegalMoves().size());
+        System.out.println("Original Board Moves ");
+        for (Move move : board.currentPlayer.getLegalMoves()){
+            System.out.println("Current Coordinate " + move.movedPiece.getPieceCoordinatePair() + " Piece " + move.movedPiece + " Destination Coordinate " + move.getDestinationCoordinate() );
+        }
+//        System.out.println(board);
+//        System.out.println(board.getBoardDirection());
+//        System.out.println(board.getAllLegalMoves());
         Board rotatedBoard = board.rotateBoard();
-        System.out.println(rotatedBoard);
-        System.out.println(board.getAllLegalMoves().size());
-        System.out.println(rotatedBoard.boardDirection);
-        rotatedBoard = rotatedBoard.rotateBoard();
-        System.out.println(rotatedBoard);
-        System.out.println(rotatedBoard.getAllLegalMoves().size());
-        System.out.println(rotatedBoard.boardDirection);
+        System.out.println(rotatedBoard.currentPlayer.getLegalMoves().size());
+        System.out.println("Rotated Board Moves ");
+        for (Move move : rotatedBoard.currentPlayer.getLegalMoves()){
+            System.out.println("Current Coordinate " + move.movedPiece.getPieceCoordinatePair() + " Piece " + move.movedPiece + " Destination Coordinate " + move.getDestinationCoordinate() );
+        }
+
+//        System.out.println(rotatedBoard);
+//        System.out.println(rotatedBoard.getBoardDirection());
+//        System.out.println(rotatedBoard.getAllLegalMoves());
 
 
-//        System.setOut(new java.io.PrintStream(
-//                new java.io.FileOutputStream(java.io.FileDescriptor.out)) {
-//            @Override
-//            public void print(String s) {
-//                super.print(s);
-//                if (s.contains("RNNRBBNKKBQQKBBQNNBRRNBNQNRBRNRNNBRBKNKQBQBKP")) {
-//                    throw new RuntimeException("Found you!");
-//                }
-//            }
-//        });
-
-//        Move move = Move.MoveFactory.createMove(rotatedBoard, new MutableCoordinate(1,5), new MutableCoordinate(2,5));
+//        List<Move> uniqueToBoard = board.getAllLegalMoves().stream()
+//                .filter(move -> !rotatedBoard.getAllLegalMoves().contains(move))
+//                .collect(Collectors.toList());
 //
-//        MoveTransition moveTransition = rotatedBoard.currentPlayer.makeMove(move);
+//        System.out.println("Moves unique to the original board:");
 //
-//        if(moveTransition.getMoveStatus().isDone()){
-//
-//            System.out.println(moveTransition.getTransitionBoard());
+//        for (Move move : uniqueToBoard){
+//            System.out.print("Source Tile "+ move.movedPiece.getPieceCoordinatePair() + " Piece Type " +move.movedPiece + " Piece Alliance "+ move.movedPiece.getPieceAlliance() + " Destination Coordinate " + move.getDestinationCoordinate());
+//            System.out.println();
 //        }
+
     }
 
 }

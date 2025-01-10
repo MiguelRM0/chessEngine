@@ -85,18 +85,23 @@ public class ChessController {
     }
 
     public void test(){
-        chessMoveManager.getGridMapCordToPane();
-        for(Map.Entry<MutableCoordinate, StackPane> entry: chessMoveManager.getGridMapCordToPane().entrySet()){
-            MutableCoordinate newCoordinate  = new MutableCoordinate(BoardUtils.NUM_TILES_PER_ROW - entry.getKey().getX()-1, BoardUtils.NUM_TILES_PER_ROW-entry.getKey().getY()-1);
-            Tile tile = chessMoveManager.getBoard().getTile(newCoordinate);
-            if(tile.isTileOccupied()){
-                updateTileDisplay(entry.getValue(), tile.getPiece().getImage() );
+//        chessMoveManager.getGridMapCordToPane();
+//        for(Map.Entry<MutableCoordinate, StackPane> entry: chessMoveManager.getGridMapCordToPane().entrySet()){
+//            MutableCoordinate newCoordinate  = new MutableCoordinate(BoardUtils.NUM_TILES_PER_ROW - entry.getKey().getX()-1, BoardUtils.NUM_TILES_PER_ROW-entry.getKey().getY()-1);
+//            Tile tile = chessMoveManager.getBoard().getTile(newCoordinate);
+//            if(tile.isTileOccupied()){
+//                updateTileDisplay(entry.getValue(), tile.getPiece().getImage() );
+//
+//            }else{
+//                updateTileDisplay(entry.getValue(), null);
+//            }
+//
+//        }
+        Board board = chessMoveManager.getBoard().rotateBoard();
 
-            }else{
-                updateTileDisplay(entry.getValue(), null);
-            }
+        chessMoveManager.setBoard(board);
+        chessMoveManager.getBoardProperty().setBoard(board);
 
-        }
     }
 
 

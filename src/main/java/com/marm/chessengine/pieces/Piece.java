@@ -107,7 +107,7 @@ public abstract class Piece{
             return false;
         }
         final Piece otherPiece = (Piece) other;
-        return pieceCoordinatePair.equals(otherPiece.getPiecePosition()) && pieceType == otherPiece.getPieceType() &&
+        return pieceCoordinatePair.equals(otherPiece.getPieceCoordinatePair()) && pieceType == otherPiece.getPieceType() &&
                 pieceAlliance == otherPiece.getPieceAlliance() && isFirstMove == otherPiece.isFirstMove();
     }
 
