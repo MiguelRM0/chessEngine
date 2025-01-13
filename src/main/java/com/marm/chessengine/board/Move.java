@@ -89,6 +89,7 @@ public abstract class  Move {
         // move the moved piece
         builder.setPiece(this.movedPiece.movePiece(this));
         builder.setMoveMaker(this.board.currentPlayer().getOpponent().getAlliance());
+        builder.setBoardDirection(this.board.getBoardDirection());
         return builder.build();
     }
 
@@ -303,7 +304,6 @@ public abstract class  Move {
                     return move;
                 }
             }
-
             return NUll_MOVE;
         }
 

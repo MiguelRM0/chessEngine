@@ -51,7 +51,6 @@ public class ChessBoardInitializer {
 
 
                 ImageView imageView = getBoardImage(currentCoordinate, this.board);
-                imageView.setId("imageView" + i + "," + j);
                 StackPane stackPane = tileColorSetUp(currentCoordinate);
 
 //                StackPane stackPane = new StackPane();

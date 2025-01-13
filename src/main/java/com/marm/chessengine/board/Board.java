@@ -276,36 +276,27 @@ public class Board {
 
     public static void main(String[] args) {
         Board board = Board.createStandardBoard();
+        Move move = Move.MoveFactory.createMove(board,new MutableCoordinate(6,5),new MutableCoordinate(4,5));
+        MoveTransition moveTransition= board.currentPlayer.makeMove(move);
+        board = moveTransition.getTransitionBoard();
+        System.out.println(board);
+        board = board.rotateBoard();
+        System.out.println(board);
         System.out.println(board.currentPlayer.getLegalMoves().size());
-        System.out.println("Original Board Moves ");
-        for (Move move : board.currentPlayer.getLegalMoves()){
-            System.out.println("Current Coordinate " + move.movedPiece.getPieceCoordinatePair() + " Piece " + move.movedPiece + " Destination Coordinate " + move.getDestinationCoordinate() );
-        }
+
+         move = Move.MoveFactory.createMove(board,new MutableCoordinate(6,5),new MutableCoordinate(4,5));
+         moveTransition= board.currentPlayer.makeMove(move);
+         board = moveTransition.getTransitionBoard();
+        System.out.println(board);
+        System.out.println( board.currentPlayer.getLegalMoves().size());
+//        System.out.println(board.getTile(new MutableCoordinate(3,2)).getPiece().getPieceAlliance());
+//        move = Move.MoveFactory.createMove(board, new MutableCoordinate(3,2), new MutableCoordinate(4,2));
+//        moveTransition = board.currentPlayer.makeMove(move);
+//        board = moveTransition.getTransitionBoard();
 //        System.out.println(board);
-//        System.out.println(board.getBoardDirection());
-//        System.out.println(board.getAllLegalMoves());
-        Board rotatedBoard = board.rotateBoard();
-        System.out.println(rotatedBoard.currentPlayer.getLegalMoves().size());
-        System.out.println("Rotated Board Moves ");
-        for (Move move : rotatedBoard.currentPlayer.getLegalMoves()){
-            System.out.println("Current Coordinate " + move.movedPiece.getPieceCoordinatePair() + " Piece " + move.movedPiece + " Destination Coordinate " + move.getDestinationCoordinate() );
-        }
-
-//        System.out.println(rotatedBoard);
-//        System.out.println(rotatedBoard.getBoardDirection());
-//        System.out.println(rotatedBoard.getAllLegalMoves());
 
 
-//        List<Move> uniqueToBoard = board.getAllLegalMoves().stream()
-//                .filter(move -> !rotatedBoard.getAllLegalMoves().contains(move))
-//                .collect(Collectors.toList());
-//
-//        System.out.println("Moves unique to the original board:");
-//
-//        for (Move move : uniqueToBoard){
-//            System.out.print("Source Tile "+ move.movedPiece.getPieceCoordinatePair() + " Piece Type " +move.movedPiece + " Piece Alliance "+ move.movedPiece.getPieceAlliance() + " Destination Coordinate " + move.getDestinationCoordinate());
-//            System.out.println();
-//        }
+
 
     }
 
