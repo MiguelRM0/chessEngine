@@ -30,12 +30,20 @@ public class King extends Piece{
     private final Image kingImgWhite = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/marm/gui/images/King/chess_king_white.png")));
     private final Image kingImgBlack = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/marm/gui/images/King/chess_king_black.png")));
     public King(final int pieceXCord, final int pieceYCord, final Alliance alliance) {
-        super(pieceXCord, pieceYCord, alliance, PieceType.KING);
+        super(pieceXCord, pieceYCord, alliance, PieceType.KING, true);
+    }
+
+    public King(final int pieceXCord,
+                final  int pieceYcord,
+                final  Alliance alliance,
+                final boolean isFirstMove){
+        super(pieceXCord,pieceYcord,alliance, PieceType.KING, isFirstMove);
+
     }
 
     @Override
     public King copyAt(MutableCoordinate newMutableCoordinates) {
-        return new King(newMutableCoordinates.getX(), newMutableCoordinates.getY(), this.pieceAlliance);
+        return new King(newMutableCoordinates.getX(), newMutableCoordinates.getY(), this.pieceAlliance, this.isFirstMove);
     }
 
     @Override

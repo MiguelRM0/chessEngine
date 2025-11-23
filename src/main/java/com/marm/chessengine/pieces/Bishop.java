@@ -29,13 +29,21 @@ public class Bishop extends Piece {
     private final Image bishopImgWhite = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/marm/gui/images/Bishop/chess_bishop_white.png")));
     private final Image bishopImgBlack = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/marm/gui/images/Bishop/chess_bishop_black.png")));
     public Bishop(int pieceXCord, int pieceYCord, Alliance alliance) {
-        super(pieceXCord, pieceYCord, alliance, PieceType.BISHOP);
+        super(pieceXCord, pieceYCord, alliance, PieceType.BISHOP, true);
+    }
+
+    public Bishop(final int pieceXCord,
+                final  int pieceYCord,
+                final  Alliance alliance,
+                final boolean isFirstMove){
+        super(pieceXCord,pieceYCord,alliance, PieceType.BISHOP, isFirstMove);
+
     }
 
 
     @Override
     public Bishop copyAt(MutableCoordinate newMutableCoordinates) {
-        return new Bishop(newMutableCoordinates.getX(), newMutableCoordinates.getY(), this.pieceAlliance);
+        return new Bishop(newMutableCoordinates.getX(), newMutableCoordinates.getY(), this.pieceAlliance, this.isFirstMove);
     }
 
     @Override

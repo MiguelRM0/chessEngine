@@ -34,7 +34,15 @@ public class Knight extends Piece{
     private final Image knightImgBlack = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/marm/gui/images/Knight/chess_knight_black.png")));
 
     public Knight(final int pieceXCord, final int pieceYCord, final Alliance alliance) {
-        super(pieceXCord, pieceYCord, alliance,PieceType.KNIGHT);
+        super(pieceXCord, pieceYCord, alliance,PieceType.KNIGHT, true);
+    }
+
+    public Knight(final int pieceXCord,
+                final  int pieceYcord,
+                final  Alliance alliance,
+                final boolean isFirstMove){
+        super(pieceXCord,pieceYcord,alliance, PieceType.KNIGHT, isFirstMove);
+
     }
 
 
@@ -71,7 +79,7 @@ public class Knight extends Piece{
 
     @Override
     public Knight copyAt(MutableCoordinate newMutableCoordinates) {
-        return new Knight(newMutableCoordinates.getX(), newMutableCoordinates.getY(), this.pieceAlliance);
+        return new Knight(newMutableCoordinates.getX(), newMutableCoordinates.getY(), this.pieceAlliance, this.isFirstMove);
     }
     @Override
     public Knight movePiece(final Move move) {

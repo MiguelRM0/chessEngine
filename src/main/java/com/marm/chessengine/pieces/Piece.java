@@ -24,13 +24,17 @@ public abstract class Piece{
 
     private final int cacheHashCode;
 
-    Piece(final int pieceXCord, final int pieceYCord, final Alliance alliance, final PieceType pieceType){
+    Piece(final int pieceXCord,
+          final int pieceYCord,
+          final Alliance alliance,
+          final PieceType pieceType,
+          final boolean isFirstMove){
         this.pieceXCord = pieceXCord;
         this.pieceYCord = pieceYCord;
         this.pieceAlliance = alliance;
         this.pieceType = pieceType;
         this.pieceCoordinatePair = new MutableCoordinate(this.pieceXCord, this.pieceYCord);
-        this.isFirstMove = true;
+        this.isFirstMove = isFirstMove;
         this.cacheHashCode = computeHashCode();
     }
 

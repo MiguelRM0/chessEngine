@@ -30,7 +30,15 @@ public class Queen extends Piece{
     private final Image queenImgWhite = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/marm/gui/images/Queen/chess_queen_white.png")));
     private final Image queenImgBlack = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/marm/gui/images/Queen/chess_queen_black.png")));
     public Queen(int pieceXCord, int pieceYCord, Alliance alliance) {
-        super(pieceXCord, pieceYCord, alliance,PieceType.QUEEN);
+        super(pieceXCord, pieceYCord, alliance,PieceType.QUEEN, true);
+    }
+
+    public Queen(final int pieceXCord,
+                final  int pieceYcord,
+                final  Alliance alliance,
+                final boolean isFirstMove){
+        super(pieceXCord,pieceYcord,alliance, PieceType.QUEEN, isFirstMove);
+
     }
 
     @Override
@@ -46,7 +54,7 @@ public class Queen extends Piece{
 
     @Override
     public Queen copyAt(MutableCoordinate newMutableCoordinates) {
-        return new Queen(newMutableCoordinates.getX(), newMutableCoordinates.getY(), this.pieceAlliance);
+        return new Queen(newMutableCoordinates.getX(), newMutableCoordinates.getY(), this.pieceAlliance, this.isFirstMove);
     }
 
     @Override

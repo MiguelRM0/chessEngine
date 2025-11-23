@@ -28,7 +28,15 @@ public class Rook extends Piece{
     private final Image rookImgWhite = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/marm/gui/images/Rook/chess_rook_white.png")));
     private final Image rookImgBlack = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/marm/gui/images/Rook/chess_rook_black.png")));
     public Rook(int pieceXCord, int pieceYCord, Alliance alliance) {
-        super(pieceXCord, pieceYCord, alliance,PieceType.ROOK);
+        super(pieceXCord, pieceYCord, alliance,PieceType.ROOK, true);
+    }
+
+    public Rook(final int pieceXCord,
+                final  int pieceYcord,
+                final  Alliance alliance,
+                final boolean isFirstMove){
+        super(pieceXCord,pieceYcord,alliance, PieceType.ROOK, isFirstMove);
+
     }
 
 
@@ -39,7 +47,7 @@ public class Rook extends Piece{
 
     @Override
     public Piece copyAt(MutableCoordinate newMutableCoordinates) {
-        return new Rook(newMutableCoordinates.getX(), newMutableCoordinates.getY(), this.pieceAlliance);
+        return new Rook(newMutableCoordinates.getX(), newMutableCoordinates.getY(), this.pieceAlliance, this.isFirstMove);
     }
 
     @Override

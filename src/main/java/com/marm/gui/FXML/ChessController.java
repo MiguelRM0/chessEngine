@@ -16,10 +16,7 @@
 package com.marm.gui.FXML;
 
 import com.marm.chessengine.board.Board;
-import com.marm.chessengine.board.BoardUtils;
 import com.marm.chessengine.board.MutableCoordinate;
-import com.marm.chessengine.board.Tile;
-import com.marm.gui.logic.BoardProperty;
 import com.marm.gui.logic.ChessBoardInitializer;
 import com.marm.gui.logic.ChessMoveManager;
 import javafx.fxml.FXML;
@@ -50,21 +47,8 @@ public class ChessController {
     public void initialize(){
         setChessBoardGrid();
         setClickOnStackPane();
-        bindTilesToBoard();;
+        chessMoveManager.bindTilesToBoard(this);;
         //TODO Create set up a board that is flipped
-    }
-
-    public void bindTilesToBoard() {
-        chessMoveManager.getBoardProperty().getBoardProperty().addListener(((observableValue, board1, t1) -> {
-            Map<MutableCoordinate, Tile> map = board1.diffBetweenBoards(t1);
-            for (Map.Entry<MutableCoordinate, Tile> entry: map.entrySet()){
-                if (entry.getValue().isTileOccupied()){
-                    updateTileDisplay(chessMoveManager.getGridMapCordToPane().get(entry.getKey()) , entry.getValue().getPiece().getImage());
-                }else{
-                    updateTileDisplay(chessMoveManager.getGridMapCordToPane().get(entry.getKey()),null );
-                }
-            }
-        }));
     }
 
 

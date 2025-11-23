@@ -17,6 +17,8 @@ package com.marm.gui.logic;
 
 import com.marm.chessengine.board.Board;
 import com.marm.chessengine.board.MutableCoordinate;
+import com.marm.chessengine.board.Tile;
+import com.marm.gui.FXML.ChessController;
 import javafx.scene.layout.StackPane;
 
 import java.util.Map;
@@ -71,14 +73,14 @@ public class ChessMoveManager {
             createChessMove.getTileHighLighter().removeHighLightTiles();
         }
         // Not on any piece tile create new source tile and change state
-        if(tileClickState == TileClickState.NOT_ON_SOURCE_TILE && board.getTile(currentEntryOnEngine).isTileOccupied()){
+        if(tileClickState.isNotOnSourceTile() && board.getTile(currentEntryOnEngine).isTileOccupied()){
             tileClickState = TileClickState.ON_SOURCE_TILE;
             createChessMove = new CreateChessMove(board,board.getTile(currentEntryOnEngine).getPiece(), gridMapCordToPane);
             // On a source tile but clicked new piece change source tile
-        }else if (tileClickState == TileClickState.ON_SOURCE_TILE && board.getTile(currentEntryOnEngine).isTileOccupied() ){
+        }else if (tileClickState.isOnSourceTile() && board.getTile(currentEntryOnEngine).isTileOccupied() ){
             createChessMove = new CreateChessMove(board,board.getTile(currentEntryOnEngine).getPiece(), gridMapCordToPane);
             // On source tile clicked empty source tile possible destination
-        }else if (tileClickState == TileClickState.ON_SOURCE_TILE  && !board.getTile(currentEntryOnEngine).isTileOccupied() ){
+        }else if (tileClickState.isOnSourceTile()  && !board.getTile(currentEntryOnEngine).isTileOccupied() ){
             Board board = createChessMove.createMove(currentEntryOnEngine);
             this.board = board;
             boardProperty.setBoard(board);
@@ -110,4 +112,16 @@ public class ChessMoveManager {
 //        ChessMoveManager moveManager = new ChessMoveManager(board, nu)
     }
 
+    public void bindTilesToBoard(ChessController chessController) {
+        getBoardProperty().getBoardProperty().addListener(((observableValue, board1, t1) -> {
+            Map<MutableCoordinate, Tile> map = board1.diffBetweenBoards(t1);
+            for (Map.Entry<MutableCoordinate, Tile> entry: map.entrySet()){
+                if (entry.getValue().isTileOccupied()){
+                    chessController.updateTileDisplay(getGridMapCordToPane().get(entry.getKey()) , entry.getValue().getPiece().getImage());
+                }else{
+                    chessController.updateTileDisplay(getGridMapCordToPane().get(entry.getKey()),null );
+                }
+            }
+        }));
+    }
 }

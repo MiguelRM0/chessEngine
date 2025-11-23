@@ -40,6 +40,12 @@ public class CreateChessMove {
         tileHighLighter = new TileHighLighter(this.board, gridMapCordToPane, this.movedPiece);
 
     }
+    /*Maybe implement and option to not have highlights*/
+    public CreateChessMove(Board board, Piece piece){
+        this.board = board;
+        this.movedPiece = piece;
+        tileHighLighter = null;
+    }
 
 
     public Board createMove(MutableCoordinate destinationCoordinate){
@@ -50,6 +56,7 @@ public class CreateChessMove {
             //TODO add the move that was made to the move log
             return transition.getTransitionBoard();
         }
+        // Else return this current chessBoard without the move made
         return this.board;
 
     }

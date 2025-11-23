@@ -32,7 +32,15 @@ public class Pawn extends Piece{
     private final Image pawnImgWhite = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/marm/gui/images/Pawn/chess_pawn_white.png")));
     private final Image pawnImgBlack = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/marm/gui/images/Pawn/chess_pawn_black.png")));
     public Pawn( final int pieceXCord, final int pieceYCord, final Alliance alliance) {
-        super(pieceXCord, pieceYCord, alliance, PieceType.PAWN);
+        super(pieceXCord, pieceYCord, alliance, PieceType.PAWN,true);
+    }
+
+    public Pawn(final int pieceXCord,
+                final  int pieceYCord,
+                final  Alliance alliance,
+                final boolean isFirstMove){
+        super(pieceXCord,pieceYCord,alliance, PieceType.PAWN, isFirstMove);
+
     }
 
 
@@ -79,7 +87,7 @@ public class Pawn extends Piece{
 
     @Override
     public Pawn copyAt(MutableCoordinate newMutableCoordinates) {
-        return new Pawn(newMutableCoordinates.getX(), newMutableCoordinates.getY(), this.pieceAlliance);
+        return new Pawn(newMutableCoordinates.getX(), newMutableCoordinates.getY(), this.pieceAlliance, this.isFirstMove);
     }
 
 
